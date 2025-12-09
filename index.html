@@ -211,7 +211,12 @@
         .shape-stage { height: 280px; display: flex; align-items: center; justify-content: center; position: relative; border: 2px solid #eee; border-radius: 15px; margin-top: 20px; background: #fff;}
         .s-rect { width: 200px; height: 120px; background: var(--accent); border: 5px solid var(--dark); position: relative; transition: border-color 0.3s; }
         .s-circle { width: 150px; height: 150px; background: var(--primary); border: 5px solid var(--dark); border-radius: 50%; position: relative; transition: border-color 0.3s; }
+        
+        /* Shape Label Styles (Corners/Angles) */
         .vertex-dot { width: 18px; height: 18px; background: red; border-radius: 50%; position: absolute; box-shadow: 0 0 0 2px white; animation: pulse 1s infinite; display: none; z-index: 10; }
+        .v-label { position: absolute; font-weight: bold; font-size: 1.2rem; color: #d32f2f; background: rgba(255,255,255,0.8); padding: 0 4px; border-radius: 4px; z-index: 11; }
+        .a-label { position: absolute; font-size: 0.9rem; color: blue; font-weight: bold; z-index: 10; white-space: nowrap; }
+
         .walker-track { position: relative; height: 60px; border-bottom: 4px solid #333; margin: 50px 20px; }
         .walker-dot { width: 30px; height: 30px; background: var(--secondary); border-radius: 50%; border: 3px solid white; box-shadow: 0 0 10px rgba(0,0,0,0.3); position: absolute; left: 50%; top: -15px; transition: left 1s; transform: translateX(-50%); z-index: 5; }
         .walker-tick { position: absolute; top: 0; width: 1px; height: 10px; background: #555; }
@@ -246,6 +251,10 @@
         .order-btn { width: 80px; height: 80px; font-size: 2rem; border-radius: 15px; border: 3px solid #ddd; background: white; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 0 #ccc; }
         .order-btn:hover { transform: translateY(-3px); }
         .order-btn.correct-order { background: #4ECDC4; color: white; border-color: #3aa8a0; box-shadow: 0 4px 0 #3aa8a0; transform: scale(1.1); pointer-events: none; }
+        
+        /* CLASS 8 POLYGON STYLES */
+        .poly-stage { width: 100%; height: 350px; display: flex; justify-content: center; align-items: center; background: white; border: 2px solid #eee; border-radius: 15px; position: relative; margin-top: 15px; }
+        .poly-info-box { background: #e0f2f1; padding: 10px; border-radius: 10px; margin-bottom: 15px; border-left: 4px solid #4ECDC4; text-align: left;}
         
         @keyframes popIn { from { transform: scale(0); } to { transform: scale(1); } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -390,7 +399,64 @@
             
             <div id="module-7" class="module-container"><h2 class="module-title">Class 7: Shape Constructor</h2><p class="story-text">Constructor Tool (Ungraded Practice)</p><div class="controls"><button class="app-btn active" id="btn-c7-circle" onclick="c7_setShapeMode('circle')">Circle</button><button class="app-btn" id="btn-c7-square" onclick="c7_setShapeMode('square')">Square</button><button class="app-btn" id="btn-c7-tri" onclick="c7_setShapeMode('tri')">Eq. Triangle</button></div><div class="controls" style="background: #fff3e0; padding: 15px; border-radius: 10px;"><label id="c7-label">Radius (cm): </label><input type="number" id="c7-dim" class="game-input" min="1" max="6" value="3" style="width: 80px;"><button class="btn-action" onclick="c7_construct()">Draw & Calc</button></div><div id="c7-stage" class="constructor-stage"><span style="color:#aaa;">Shape will appear here...</span></div><div id="c7-results" class="result-panel"><h3>Calculated Properties:</h3><div id="c7-calc-content"></div></div></div>
             
-            <div id="module-8" class="module-container"><div class="score-panel"><span class="score-text">📝 Test Score:</span><span class="score-val" id="score-8">0 / 0</span><button class="btn-reset" onclick="resetScore(8)">Start Test</button></div><h2 class="module-title">Class 8: Algebra & Solids</h2><div class="controls"><button class="app-btn active" id="btn-c8-alg" onclick="c8_switchTab('alg')">Algebra Scenarios</button><button class="app-btn" id="btn-c8-solid" onclick="c8_switchTab('solid')">3D Shapes</button></div><div id="c8-tab-alg"><div class="controls"><button class="app-btn" id="btn-c8-taxi" onclick="c8_setAlgMode('taxi')">Taxi Ride</button><button class="app-btn" id="btn-c8-age" onclick="c8_setAlgMode('age')">Age Riddle</button></div><div class="scenario-box" id="c8-scenario-box"><div class="alg-stage" id="c8-alg-stage"></div><div class="controls" id="c8-controls" style="margin-top:20px;"></div></div><div class="controls" style="margin-top:20px;"><button class="btn-action btn-new" onclick="c8_generateProblem()">New Scenario</button></div><div id="c8-feedback" class="feedback">Read the story and solve!</div></div><div id="c8-tab-solid" style="display:none;"><p class="story-text">Solid Shapes have Volume (3 Dimensions).</p><div class="shape-3d-stage"><div style="text-align:center;"><div class="s-cylinder"></div><p>Cylinder</p></div><div style="text-align:center;"><div class="s-cone-visual"></div><p>Cone</p></div><div style="text-align:center;"><div class="s-sphere"></div><p>Sphere</p></div></div></div></div>
+            <div id="module-8" class="module-container">
+                <div class="score-panel"><span class="score-text">📝 Test Score:</span><span class="score-val" id="score-8">0 / 0</span><button class="btn-reset" onclick="resetScore(8)">Start Test</button></div>
+                <h2 class="module-title">Class 8: Algebra & Geometry</h2>
+                
+                <div class="controls">
+                    <button class="app-btn active" id="btn-c8-alg" onclick="c8_switchTab('alg')">Algebra Scenarios</button>
+                    <button class="app-btn" id="btn-c8-poly" onclick="c8_switchTab('poly')">Polygons & Area</button>
+                    <button class="app-btn" id="btn-c8-solid" onclick="c8_switchTab('solid')">3D Shapes</button>
+                </div>
+
+                <div id="c8-tab-alg">
+                    <div class="controls"><button class="app-btn" id="btn-c8-taxi" onclick="c8_setAlgMode('taxi')">Taxi Ride</button><button class="app-btn" id="btn-c8-age" onclick="c8_setAlgMode('age')">Age Riddle</button></div>
+                    <div class="scenario-box" id="c8-scenario-box">
+                        <div class="alg-stage" id="c8-alg-stage"></div>
+                        <div class="controls" id="c8-controls" style="margin-top:20px;"></div>
+                    </div>
+                    <div class="controls" style="margin-top:20px;"><button class="btn-action btn-new" onclick="c8_generateProblem()">New Scenario</button></div>
+                    <div id="c8-feedback" class="feedback">Read the story and solve!</div>
+                </div>
+
+                <div id="c8-tab-poly" style="display:none;">
+                    <div class="controls">
+                        <button class="app-btn" id="btn-c8-p-quad" onclick="c8_setPolyMode(4)">Quadrilateral</button>
+                        <button class="app-btn" id="btn-c8-p-pent" onclick="c8_setPolyMode(5)">Pentagon</button>
+                        <button class="app-btn" id="btn-c8-p-hex" onclick="c8_setPolyMode(6)">Hexagon</button>
+                        <button class="app-btn" id="btn-c8-p-hept" onclick="c8_setPolyMode(7)">Heptagon</button>
+                        <button class="app-btn" id="btn-c8-p-oct" onclick="c8_setPolyMode(8)">Octagon</button>
+                    </div>
+                    
+                    <div class="poly-info-box" id="c8-poly-info">
+                        Select a shape above to see how we calculate its area.
+                    </div>
+
+                    <div class="poly-stage" id="c8-poly-stage">
+                        <span style="color:#aaa">Geometry Board</span>
+                    </div>
+
+                    <div id="c8-poly-quiz-section" style="display:none; margin-top:20px; border-top: 2px dashed #ddd; padding-top:20px;">
+                        <p class="story-text" style="font-weight: bold;" id="c8-poly-question">Calculate the area:</p>
+                        <div class="controls">
+                            <input type="number" id="c8-poly-input" class="game-input" placeholder="Area">
+                            <button class="btn-action" onclick="c8_checkPoly()">Check</button>
+                            <button class="btn-action btn-new" onclick="c8_generatePolyQuiz()">New Numbers</button>
+                        </div>
+                        <div id="c8-poly-feedback" class="feedback"></div>
+                    </div>
+                </div>
+
+                <div id="c8-tab-solid" style="display:none;">
+                    <p class="story-text">Solid Shapes have Volume (3 Dimensions).</p>
+                    <div class="shape-3d-stage">
+                        <div style="text-align:center;"><div class="s-cylinder"></div><p>Cylinder</p></div>
+                        <div style="text-align:center;"><div class="s-cone-visual"></div><p>Cone</p></div>
+                        <div style="text-align:center;"><div class="s-sphere"></div><p>Sphere</p></div>
+                    </div>
+                </div>
+            </div>
+
             <div class="brand-footer">Amanda & Michael's Amica Soft © 2025</div>
         </div>
     </div>
@@ -497,7 +563,9 @@
         function resetScore(modId) { 
             if(scores[modId]) { scores[modId].c = 0; scores[modId].t = 1; scores[modId].s = false; updateScoreUI(modId); 
             if(modId===0) { if(c0_mode==='count') c0_generate(true); else if(c0_mode==='ba') c0_generate_ba(true); else c0_generate_order(true); }
-            if(modId===1) c1_generate(true); if(modId===2) c2_generate(true); if(modId===3) c3_generate(true); if(modId===6) c6_newGraphProblem(true); if(modId===8) c8_generateProblem(true); } 
+            if(modId===1) c1_generate(true); if(modId===2) c2_generate(true); if(modId===3) c3_generate(true); if(modId===6) c6_newGraphProblem(true); if(modId===8) { 
+                if(c8_tab==='poly') c8_generatePolyQuiz(true); else c8_generateProblem(true); 
+            }} 
         }
         function updateScoreUI(id) { const el = document.getElementById(`score-${id}`); if(el) el.innerText = `${scores[id].c} / ${scores[id].t}`; }
         
@@ -699,10 +767,282 @@
         let c1_mode='add', c1_ans; function c1_setMode(m){c1_mode=m;c1_generate();} function c1_generate(skip){ if(!skip) prepNewScore(1); let s=document.getElementById('c1-visuals'); document.getElementById('c1-feedback').innerText=''; document.getElementById('c1-input').value=''; if(c1_mode==='add'){ let n1=Math.floor(Math.random()*5)+1, n2=Math.floor(Math.random()*5)+1; c1_ans=n1+n2; document.getElementById('c1-eq').innerText=`${n1} + ${n2} = ?`; s.innerHTML=getApples(n1)+' <span style="font-size:3rem; margin:0 10px;">+</span> '+getApples(n2); document.getElementById('c1-instruction').innerText="Count all apples together!"; } else { let n1=Math.floor(Math.random()*5)+4, n2=Math.floor(Math.random()*3)+1; if(n1<=n2) n1=n2+2; c1_ans=n1-n2; document.getElementById('c1-eq').innerText=`${n1} - ${n2} = ?`; let h=''; for(let i=0;i<n1;i++) h+=(i>=(n1-n2))?`<div class="apple eaten"><div class="cross-line"></div></div>`:`<div class="apple"></div>`; s.innerHTML=h; document.getElementById('c1-instruction').innerText=`You have ${n1} apples. Take away ${n2}.`; } } function getApples(n){let h='';for(let i=0;i<n;i++)h+='<div class="apple"></div>';return `<div style="display:inline-block">${h}</div>`;} function c1_check(){ let u=parseInt(document.getElementById('c1-input').value),f=document.getElementById('c1-feedback'); if(u===c1_ans){ f.innerText="Correct! 🎉";f.className="feedback correct"; playSound('correct'); scoreWin(1); }else{ f.innerText="Try again ❌";f.className="feedback wrong"; playSound('wrong'); } }
         /* C2 */ let c2_ans=0; const c2_themes=[{item:'🍎',container:'Boxes',name:'Apples'},{item:'🍪',container:'Jars',name:'Cookies'}]; function c2_generate(skip){ if(!skip) prepNewScore(2); const t=c2_themes[Math.floor(Math.random()*2)]; let b=Math.floor(Math.random()*3)+2, i=Math.floor(Math.random()*4)+2; c2_ans=b*i; document.getElementById('c2-input').value=''; document.getElementById('c2-feedback').innerText=''; document.getElementById('c2-story').innerText=`${b} ${t.container}. Each has ${i} ${t.name}. Total?`; document.getElementById('c2-eq').innerText=`${b} × ${i} = ?`; const s=document.getElementById('c2-stage'); s.innerHTML=''; for(let k=0;k<b;k++){ let d=document.createElement('div');d.className='mult-box'; for(let j=0;j<i;j++){let sp=document.createElement('span');sp.className='emoji-item';sp.innerText=t.item;d.appendChild(sp);} s.appendChild(d); } } function c2_check(){ let u=parseInt(document.getElementById('c2-input').value),f=document.getElementById('c2-feedback'); if(u===c2_ans){f.innerText="Correct! 🌟";f.className="feedback correct"; playSound('correct'); scoreWin(2);}else{f.innerText="Count carefully!";f.className="feedback wrong"; playSound('wrong');} }
         /* C3 */ let c3_ans=0,c3_gr=0,c3_t={}; const c3_ts=[{item:'🍌',group:'Monkeys',icon:'🐵'},{item:'🍬',group:'Kids',icon:'🧒'}]; function c3_generate(skip){ if(!skip) prepNewScore(3); c3_t=c3_ts[Math.floor(Math.random()*2)]; c3_ans=Math.floor(Math.random()*3)+2; c3_gr=Math.floor(Math.random()*3)+2; let tot=c3_ans*c3_gr; document.getElementById('c3-input').value=''; document.getElementById('c3-feedback').innerText=''; document.getElementById('c3-story').innerText=`Share ${tot} ${c3_t.item} among ${c3_gr} ${c3_t.group}.`; let p=''; for(let i=0;i<tot;i++)p+=`<span class="emoji-item">${c3_t.item}</span>`; document.getElementById('c3-pile').innerHTML=p; const s=document.getElementById('c3-stage'); s.innerHTML=''; for(let i=0;i<c3_gr;i++){ let c=document.createElement('div');c.className='recipient-container'; let a=document.createElement('div');a.className='recipient-avatar';a.innerText=c3_t.icon; a.style.filter=`hue-rotate(${i*60}deg)`; let b=document.createElement('div');b.className='recipient-box';b.id=`c3-box-${i}`; c.appendChild(a);c.appendChild(b);s.appendChild(c); } } function c3_check(){ let u=parseInt(document.getElementById('c3-input').value),f=document.getElementById('c3-feedback'); if(u===c3_ans){ f.innerText="Correct! ✅";f.className="feedback correct"; playSound('correct'); scoreWin(3); document.getElementById('c3-pile').innerHTML=''; for(let i=0;i<c3_gr;i++){ let b=document.getElementById(`c3-box-${i}`);b.classList.add('filled'); for(let j=0;j<c3_ans;j++){let it=document.createElement('span');it.className='emoji-item';it.innerText=c3_t.item;b.appendChild(it);} } }else{f.innerText="Not quite. Try sharing again.";f.className="feedback wrong"; playSound('wrong');} }
-        /* C5 */ let c5_curr=''; function c5_show(s){ c5_curr=s; const st=document.getElementById('c5-shape-area'), inf=document.getElementById('c5-info'); st.innerHTML=''; if(s==='rect'){st.innerHTML=`<div class="s-rect shape-display"><div class="vertex-dot" style="top:-9px;left:-9px;"></div><div class="vertex-dot" style="top:-9px;right:-9px;"></div><div class="vertex-dot" style="bottom:-9px;left:-9px;"></div><div class="vertex-dot" style="bottom:-9px;right:-9px;"></div></div>`;inf.innerText="Rectangle: 4 Sides, 4 Corners (90°).";} else if(s==='circle'){st.innerHTML=`<div class="s-circle shape-display" style="border-width:5px;"></div>`;inf.innerText="Circle: 0 Corners, 1 Curved Edge.";} else if(s==='tri'){st.innerHTML=`<div style="position:relative; width:200px; height:170px;"><svg height="170" width="200"><polygon points="100,5 195,165 5,165" style="fill:var(--secondary);stroke:var(--dark);stroke-width:5" /></svg><div class="vertex-dot" style="top:-5px; left:90px;"></div><div class="vertex-dot" style="bottom:-5px; left:-5px;"></div><div class="vertex-dot" style="bottom:-5px; right:-5px;"></div></div>`;inf.innerText="Triangle: 3 Sides, 3 Corners.";} } function c5_highlight(t){ if(!c5_curr)return alert("Select shape first"); if(t==='corners'){document.querySelectorAll('.vertex-dot').forEach(e=>e.style.display='block');if(c5_curr==='circle')alert("Circles have no corners!");} if(t==='sides'){ const e=document.querySelector('.shape-display'); if(c5_curr!=='tri'){e.style.borderColor="#007BFF";e.style.boxShadow="0 0 15px #007BFF";setTimeout(()=>{e.style.borderColor="";e.style.boxShadow="none";},1500);} else{const p=document.querySelector('polygon');p.style.stroke="#007BFF";p.style.strokeWidth="10";setTimeout(()=>{p.style.stroke="var(--dark)";p.style.strokeWidth="5";},1500);} } }
+        /* C5 */ 
+        let c5_curr=''; 
+        function c5_show(s){ 
+            c5_curr=s; 
+            const st=document.getElementById('c5-shape-area'), inf=document.getElementById('c5-info'); 
+            st.innerHTML=''; 
+            
+            if(s==='rect'){
+                st.innerHTML=`<div class="s-rect shape-display">
+                    <span class="v-label" style="top:-25px; left:-15px;">A</span>
+                    <span class="v-label" style="top:-25px; right:-15px;">B</span>
+                    <span class="v-label" style="bottom:-25px; left:-15px;">C</span>
+                    <span class="v-label" style="bottom:-25px; right:-15px;">D</span>
+                    <div class="vertex-dot" style="top:-9px;left:-9px;"></div><div class="vertex-dot" style="top:-9px;right:-9px;"></div><div class="vertex-dot" style="bottom:-9px;left:-9px;"></div><div class="vertex-dot" style="bottom:-9px;right:-9px;"></div></div>`;
+                inf.innerText="Rectangle: 4 Sides, 4 Corners (90°).";
+            } 
+            else if(s==='circle'){
+                st.innerHTML=`<div class="s-circle shape-display" style="border-width:5px;"></div>`;
+                inf.innerText="Circle: 0 Corners, 1 Curved Edge.";
+            } 
+            else if(s==='tri'){
+                st.innerHTML=`<div style="position:relative; width:200px; height:170px;">
+                    <span class="v-label" style="top:-20px; left:85px;">A</span>
+                    <span class="v-label" style="bottom:-20px; left:-10px;">B</span>
+                    <span class="v-label" style="bottom:-20px; right:-10px;">C</span>
+                    <svg height="170" width="200"><polygon points="100,5 195,165 5,165" style="fill:var(--secondary);stroke:var(--dark);stroke-width:5" /></svg>
+                    <div class="vertex-dot" style="top:-5px; left:90px;"></div><div class="vertex-dot" style="bottom:-5px; left:-5px;"></div><div class="vertex-dot" style="bottom:-5px; right:-5px;"></div></div>`;
+                inf.innerText="Triangle: 3 Sides, 3 Corners.";
+            } 
+        } 
+        function c5_highlight(t){ 
+            if(!c5_curr)return alert("Select shape first"); 
+            if(t==='corners'){
+                document.querySelectorAll('.vertex-dot').forEach(e=>e.style.display='block');
+                if(c5_curr==='circle') alert("Circles have no corners!");
+            } 
+            if(t==='sides'){ 
+                const e=document.querySelector('.shape-display'); 
+                if(c5_curr!=='tri'){
+                    e.style.borderColor="#007BFF";e.style.boxShadow="0 0 15px #007BFF";
+                    setTimeout(()=>{e.style.borderColor="";e.style.boxShadow="none";},1500);
+                } else {
+                    const p=document.querySelector('polygon');p.style.stroke="#007BFF";p.style.strokeWidth="10";
+                    setTimeout(()=>{p.style.stroke="var(--dark)";p.style.strokeWidth="5";},1500);
+                } 
+            } 
+        }
         /* C6 */ function c6_switchMode(m){ document.getElementById('c6-mode-walker').style.display=m==='line'?'block':'none'; document.getElementById('c6-mode-graph').style.display=m==='graph'?'block':'none'; document.getElementById('btn-c6-line').classList.toggle('active',m==='line'); document.getElementById('btn-c6-graph').classList.toggle('active',m==='graph'); if(m==='line')c6_drawWalkerTicks(); if(m==='graph'){c6_drawGridLabels();if(scores[6].t===0)c6_newGraphProblem();} } function c6_move(){let v=parseInt(document.getElementById('c6-input').value);if(v>10)v=10;if(v<-10)v=-10;document.getElementById('c6-walker').style.left=(50+(v*4))+"%";} function c6_drawWalkerTicks(){ const track=document.getElementById('c6-walker-track'); if(track.querySelector('.walker-tick'))return; for(let i=-10;i<=10;i++){ let tick=document.createElement('div');tick.className='walker-tick';tick.style.left=(50+(i*4))+'%'; let num=document.createElement('div');num.className='walker-num';num.innerText=i;num.style.left=(50+(i*4))+'%'; if(i%5!==0 && i!==0)num.style.display='none'; track.appendChild(tick);track.appendChild(num); } } let c6_tx=0,c6_ty=0; function c6_drawGridLabels(){ const b=document.getElementById('c6-board'); if(b.querySelector('.scale-label'))return; for(let i=-10;i<=10;i++){ if(i===0)continue; if(i%2!==0)continue; let x=document.createElement('div');x.className='scale-label';x.innerText=i;x.style.left=(200+(i*20)-5)+'px';x.style.top='205px';b.appendChild(x); let y=document.createElement('div');y.className='scale-label';y.innerText=i;y.style.left='180px';y.style.top=(200-(i*20)-8)+'px';b.appendChild(y); } let o=document.createElement('div');o.className='scale-label';o.innerText='0';o.style.left='185px';o.style.top='205px';b.appendChild(o); } function c6_newGraphProblem(skip){ if(!skip) prepNewScore(6); c6_tx=Math.floor(Math.random()*19)-9; c6_ty=Math.floor(Math.random()*19)-9; document.getElementById('c6-graph-instruction').innerText=`Tap Grid at (${c6_tx}, ${c6_ty})`; document.getElementById('c6-plot-dot').style.display='none'; document.getElementById('c6-graph-feedback').innerText=''; } function c6_plotClick(e){ const b=e.currentTarget, r=b.getBoundingClientRect(); let gx=Math.round((e.clientX-r.left-200)/20), gy=Math.round(-(e.clientY-r.top-200)/20); const d=document.getElementById('c6-plot-dot'); d.style.display='block';d.style.left=(200+(gx*20))+'px';d.style.top=(200-(gy*20))+'px'; const f=document.getElementById('c6-graph-feedback'); if(gx===c6_tx && gy===c6_ty){ f.innerText="Correct! 🎉";f.className="feedback correct"; playSound('correct'); scoreWin(6); }else{ f.innerText=`You clicked (${gx}, ${gy}). Try again.`;f.className="feedback wrong"; playSound('wrong'); } }
-        /* C7 */ let c7_mode='circle'; const PX_CM=28; function c7_setShapeMode(m){ c7_mode=m; ['circle','square','tri'].forEach(k=>document.getElementById(`btn-c7-${k}`).classList.remove('active')); document.getElementById(`btn-c7-${m}`).classList.add('active'); document.getElementById('c7-label').innerText=(m==='circle'?"Radius":"Side")+" (cm): "; document.getElementById('c7-stage').innerHTML='<span style="color:#aaa">Drawing area...</span>'; document.getElementById('c7-results').style.display='none'; } function c7_construct(){ const v=parseFloat(document.getElementById('c7-dim').value); if(!v||v<=0||v>10)return alert("Enter value 1-10"); const st=document.getElementById('c7-stage'); st.innerHTML=''; document.getElementById('c7-results').style.display='block'; const res=document.getElementById('c7-calc-content'); if(c7_mode==='circle'){ let d=(v*2)*PX_CM; let a=(Math.PI*v*v).toFixed(2); let c=(2*Math.PI*v).toFixed(2); let container=document.createElement('div'); container.style.position='relative';container.style.width=d+'px';container.style.height=d+'px'; let el=document.createElement('div');el.className='d-circle';el.style.width='100%';el.style.height='100%'; let dLine=document.createElement('div');dLine.className='dim-line-dashed'; dLine.style.width='100%';dLine.style.top='50%';dLine.style.left='0'; let rLine=document.createElement('div');rLine.className='dim-line'; rLine.style.height='50%';rLine.style.width='2px';rLine.style.left='50%';rLine.style.top='0';rLine.style.background='blue'; let dLabel=document.createElement('div');dLabel.className='shape-label'; dLabel.innerText=`d = ${v*2}cm`;dLabel.style.top='52%';dLabel.style.left='10%'; let rLabel=document.createElement('div');rLabel.className='shape-label'; rLabel.innerText=`r = ${v}cm`;rLabel.style.top='20%';rLabel.style.left='52%'; container.appendChild(el);container.appendChild(dLine);container.appendChild(rLine); container.appendChild(dLabel);container.appendChild(rLabel); st.appendChild(container); res.innerHTML=`<p>Area (πr²): <b>${a} cm²</b></p><p>Circumference (2πr): <b>${c} cm</b></p>`; } else if(c7_mode==='square'){ let s=v*PX_CM; let a=(v*v).toFixed(2); let p=(4*v).toFixed(2); let el=document.createElement('div');el.className='d-square';el.style.width=s+'px';el.style.height=s+'px'; let lTop=document.createElement('div');lTop.className='shape-label';lTop.innerText=`s = ${v}cm`;lTop.style.top='-25px';lTop.style.left='50%';lTop.style.transform='translateX(-50%)'; el.appendChild(lTop); st.appendChild(el); res.innerHTML=`<p>Area (s²): <b>${a} cm²</b></p><p>Perimeter (4s): <b>${p} cm</b></p>`; } else { let s=v*PX_CM; let h=s*(Math.sqrt(3)/2); let a=((Math.sqrt(3)/4)*v*v).toFixed(2); let p=(3*v).toFixed(2); st.innerHTML=`<svg width="${s+40}" height="${h+40}" style="overflow:visible"><polygon points="${s/2},0 ${s},${h} 0,${h}" style="fill:rgba(78,205,196,0.3);stroke:var(--dark);stroke-width:3"/><text x="${s*0.2}" y="${h/2}" fill="#333" font-weight="bold">${v}cm</text><text x="${s*0.7}" y="${h/2}" fill="#333" font-weight="bold">${v}cm</text><text x="${s/2}" y="${h+20}" fill="#333" font-weight="bold" text-anchor="middle">${v}cm</text></svg>`; res.innerHTML=`<p>Area (√3/4 s²): <b>${a} cm²</b></p><p>Perimeter (3s): <b>${p} cm</b></p>`; } }
-        /* C8 */ let c8_alg_mode='taxi', c8_curr_data={}, c8_step=1; function c8_switchTab(t){ document.getElementById('c8-tab-solid').style.display=t==='solid'?'block':'none'; document.getElementById('c8-tab-alg').style.display=t==='alg'?'block':'none'; document.getElementById('btn-c8-solid').classList.toggle('active',t==='solid'); document.getElementById('btn-c8-alg').classList.toggle('active',t==='alg'); } function c8_setAlgMode(mode){ c8_alg_mode=mode; document.getElementById('btn-c8-taxi').classList.toggle('active',mode==='taxi'); document.getElementById('btn-c8-age').classList.toggle('active',mode==='age'); c8_generateProblem(); } function c8_generateProblem(skip){ if(!skip) prepNewScore(8); const stage=document.getElementById('c8-alg-stage'); const ctrl=document.getElementById('c8-controls'); const fb=document.getElementById('c8-feedback'); fb.innerText=""; fb.className="feedback"; c8_step=1; if(c8_alg_mode==='taxi'){ let r=Math.floor(Math.random()*4)*5+10; let b=Math.floor(Math.random()*5)*10+20; let x=Math.floor(Math.random()*8)+2; let y=(r*x)+b; c8_curr_data={type:'taxi',r:r,b:b,x:x,y:y}; stage.innerHTML=`<p class="story-text" style="margin:0 0 10px 0;"><b>🚕 The Taxi Ride</b><br>Base Fare: ₹${b}<br>Rate: ₹${r} per km<br>Total Paid: ₹${y}</p><p class="equation" id="c8-eq">${r}x + ${b} = ${y}</p><p id="c8-prompt" style="color:#555"><b>Step 1:</b> Which operation comes first?</p>`; ctrl.innerHTML=`<button class="step-btn" onclick="c8_process(1, 'sub', ${b})">Subtract ${b}</button><button class="step-btn" onclick="c8_process(1, 'div', ${r})">Divide by ${r}</button>`; } else { let m=Math.floor(Math.random()*3)+2; let c=Math.floor(Math.random()*8)+2; let x=Math.floor(Math.random()*8)+5; let isSub=Math.random()>0.5; let y=isSub?(m*x)-c:(m*x)+c; c8_curr_data={type:'age',m:m,c:c,x:x,y:y,isSub:isSub}; let phrase=isSub?`minus ${c}`:`plus ${c}`; stage.innerHTML=`<p class="story-text" style="margin:0 0 10px 0;"><b>👴 Age Riddle</b><br>"${m} times my age ${phrase} is ${y}."</p><p class="equation" id="c8-eq">${m}x ${isSub?'-':'+'} ${c} = ${y}</p><p id="c8-prompt" style="color:#555"><b>Step 1:</b> Which operation comes first?</p>`; ctrl.innerHTML=`<button class="step-btn" onclick="c8_process(1, 'add', ${c})">Add ${c}</button><button class="step-btn" onclick="c8_process(1, 'sub', ${c})">Subtract ${c}</button>`; } } function c8_process(stepAttempt,action,val){ const fb=document.getElementById('c8-feedback'); const d=c8_curr_data; const eq=document.getElementById('c8-eq'); const ctrl=document.getElementById('c8-controls'); const prompt=document.getElementById('c8-prompt'); if(c8_step===1){ let correct=false; if(d.type==='taxi'&&action==='sub')correct=true; if(d.type==='age'&&((d.isSub&&action==='add')||(!d.isSub&&action==='sub')))correct=true; if(correct){ fb.innerText="Correct! First we handle the constant."; fb.className="feedback correct"; playSound('correct'); if(d.type==='taxi')eq.innerText=`${d.r}x = ${d.y-d.b}`; else eq.innerText=`${d.m}x = ${d.m*d.x}`; c8_step=2; let coef=d.type==='taxi'?d.r:d.m; prompt.innerHTML="<b>Step 2:</b> Now isolate x."; setTimeout(()=>{ctrl.innerHTML=`<button class="step-btn" onclick="c8_process(2, 'div', ${coef})">Divide by ${coef}</button><button class="step-btn" onclick="c8_process(2, 'sub', ${coef})">Subtract ${coef}</button>`;},500); }else{ fb.innerText="Incorrect order. Try again."; fb.className="feedback wrong"; playSound('wrong'); } } else if(c8_step===2){ if(action==='div'){ fb.innerText=`🎉 Correct! x = ${d.x}. Puzzle Solved!`; fb.className="feedback correct"; eq.innerText=`x = ${d.x}`; ctrl.innerHTML=''; playSound('correct'); scoreWin(8); }else{ fb.innerText="Multiplication is undone by Division."; fb.className="feedback wrong"; playSound('wrong'); } } }
+        /* C7 */ 
+        let c7_mode='circle'; const PX_CM=28; 
+        function c7_setShapeMode(m){ c7_mode=m; ['circle','square','tri'].forEach(k=>document.getElementById(`btn-c7-${k}`).classList.remove('active')); document.getElementById(`btn-c7-${m}`).classList.add('active'); document.getElementById('c7-label').innerText=(m==='circle'?"Radius":"Side")+" (cm): "; document.getElementById('c7-stage').innerHTML='<span style="color:#aaa">Drawing area...</span>'; document.getElementById('c7-results').style.display='none'; } 
+        function c7_construct(){ 
+            const v=parseFloat(document.getElementById('c7-dim').value); 
+            if(!v||v<=0||v>10)return alert("Enter value 1-10"); 
+            const st=document.getElementById('c7-stage'); 
+            st.innerHTML=''; 
+            document.getElementById('c7-results').style.display='block'; 
+            const res=document.getElementById('c7-calc-content'); 
+            
+            if(c7_mode==='circle'){ 
+                let d=(v*2)*PX_CM; let a=(Math.PI*v*v).toFixed(2); let c=(2*Math.PI*v).toFixed(2); 
+                let container=document.createElement('div'); 
+                container.style.position='relative';container.style.width=d+'px';container.style.height=d+'px'; 
+                let el=document.createElement('div');el.className='d-circle';el.style.width='100%';el.style.height='100%'; 
+                let dLine=document.createElement('div');dLine.className='dim-line-dashed'; dLine.style.width='100%';dLine.style.top='50%';dLine.style.left='0'; 
+                let rLine=document.createElement('div');rLine.className='dim-line'; rLine.style.height='50%';rLine.style.width='2px';rLine.style.left='50%';rLine.style.top='0';rLine.style.background='blue'; 
+                let dLabel=document.createElement('div');dLabel.className='shape-label'; dLabel.innerText=`d = ${v*2}cm`;dLabel.style.top='52%';dLabel.style.left='10%'; 
+                let rLabel=document.createElement('div');rLabel.className='shape-label'; rLabel.innerText=`r = ${v}cm`;rLabel.style.top='20%';rLabel.style.left='52%'; 
+                container.appendChild(el);container.appendChild(dLine);container.appendChild(rLine); container.appendChild(dLabel);container.appendChild(rLabel); 
+                st.appendChild(container); 
+                res.innerHTML=`<p>Area (πr²): <b>${a} cm²</b></p><p>Circumference (2πr): <b>${c} cm</b></p>`; 
+            } else if(c7_mode==='square'){ 
+                let s=v*PX_CM; let a=(v*v).toFixed(2); let p=(4*v).toFixed(2); 
+                let el=document.createElement('div');el.className='d-square';el.style.width=s+'px';el.style.height=s+'px'; 
+                let lTop=document.createElement('div');lTop.className='shape-label';lTop.innerText=`s = ${v}cm`;lTop.style.top='-25px';lTop.style.left='50%';lTop.style.transform='translateX(-50%)'; 
+                
+                // ADDED LABELS FOR SQUARE
+                let vA=document.createElement('span');vA.className='v-label';vA.innerText='A';vA.style.top='-20px';vA.style.left='-20px';
+                let vB=document.createElement('span');vB.className='v-label';vB.innerText='B';vB.style.top='-20px';vB.style.right='-20px';
+                let vC=document.createElement('span');vC.className='v-label';vC.innerText='C';vC.style.bottom='-20px';vC.style.left='-20px';
+                let vD=document.createElement('span');vD.className='v-label';vD.innerText='D';vD.style.bottom='-20px';vD.style.right='-20px';
+                
+                // ADDED ANGLES FOR SQUARE
+                let angA=document.createElement('span');angA.className='a-label';angA.innerText='90°';angA.style.top='5px';angA.style.left='5px';
+                let angB=document.createElement('span');angB.className='a-label';angB.innerText='90°';angB.style.top='5px';angB.style.right='5px';
+                let angC=document.createElement('span');angC.className='a-label';angC.innerText='90°';angC.style.bottom='5px';angC.style.left='5px';
+                let angD=document.createElement('span');angD.className='a-label';angD.innerText='90°';angD.style.bottom='5px';angD.style.right='5px';
+
+                el.appendChild(lTop); 
+                el.appendChild(vA);el.appendChild(vB);el.appendChild(vC);el.appendChild(vD);
+                el.appendChild(angA);el.appendChild(angB);el.appendChild(angC);el.appendChild(angD);
+
+                st.appendChild(el); 
+                res.innerHTML=`<p>Area (s²): <b>${a} cm²</b></p><p>Perimeter (4s): <b>${p} cm</b></p>`; 
+            } else { 
+                let s=v*PX_CM; let h=s*(Math.sqrt(3)/2); let a=((Math.sqrt(3)/4)*v*v).toFixed(2); let p=(3*v).toFixed(2); 
+                st.innerHTML=`<div style="position:relative; width:${s}px; height:${h}px">
+                    <svg width="${s}" height="${h}" style="overflow:visible">
+                        <polygon points="${s/2},0 ${s},${h} 0,${h}" style="fill:rgba(78,205,196,0.3);stroke:var(--dark);stroke-width:3"/>
+                        <text x="${s*0.2}" y="${h/2}" fill="#333" font-weight="bold">${v}cm</text>
+                    </svg>
+                    <span class="v-label" style="top:-25px; left:50%; transform:translateX(-50%);">A</span>
+                    <span class="v-label" style="bottom:-10px; right:-20px;">B</span>
+                    <span class="v-label" style="bottom:-10px; left:-20px;">C</span>
+                    <span class="a-label" style="top:10px; left:50%; transform:translateX(-50%); color:blue;">60°</span>
+                    <span class="a-label" style="bottom:5px; right:5px; color:blue;">60°</span>
+                    <span class="a-label" style="bottom:5px; left:5px; color:blue;">60°</span>
+                </div>`; 
+                res.innerHTML=`<p>Area (√3/4 s²): <b>${a} cm²</b></p><p>Perimeter (3s): <b>${p} cm</b></p>`; 
+            } 
+        }
+
+        /* --- C8: ALGEBRA & GEOMETRY (UPDATED) --- */
+        let c8_tab='alg';
+        let c8_alg_mode='taxi', c8_curr_data={}, c8_step=1; 
+        
+        let c8_poly_mode = 5; // Default pentagon
+        let c8_poly_quiz = { ans: 0 };
+        
+        function c8_switchTab(t){ 
+            c8_tab = t;
+            ['alg', 'solid', 'poly'].forEach(k => {
+                document.getElementById(`c8-tab-${k}`).style.display = (k === t) ? 'block' : 'none';
+                document.getElementById(`btn-c8-${k}`).classList.toggle('active', k === t);
+            });
+            if(t==='poly') c8_setPolyMode(5); 
+        } 
+
+        function c8_setAlgMode(mode){ c8_alg_mode=mode; document.getElementById('btn-c8-taxi').classList.toggle('active',mode==='taxi'); document.getElementById('btn-c8-age').classList.toggle('active',mode==='age'); c8_generateProblem(); } 
+        
+        function c8_generateProblem(skip){ if(!skip) prepNewScore(8); const stage=document.getElementById('c8-alg-stage'); const ctrl=document.getElementById('c8-controls'); const fb=document.getElementById('c8-feedback'); fb.innerText=""; fb.className="feedback"; c8_step=1; if(c8_alg_mode==='taxi'){ let r=Math.floor(Math.random()*4)*5+10; let b=Math.floor(Math.random()*5)*10+20; let x=Math.floor(Math.random()*8)+2; let y=(r*x)+b; c8_curr_data={type:'taxi',r:r,b:b,x:x,y:y}; stage.innerHTML=`<p class="story-text" style="margin:0 0 10px 0;"><b>🚕 The Taxi Ride</b><br>Base Fare: ₹${b}<br>Rate: ₹${r} per km<br>Total Paid: ₹${y}</p><p class="equation" id="c8-eq">${r}x + ${b} = ${y}</p><p id="c8-prompt" style="color:#555"><b>Step 1:</b> Which operation comes first?</p>`; ctrl.innerHTML=`<button class="step-btn" onclick="c8_process(1, 'sub', ${b})">Subtract ${b}</button><button class="step-btn" onclick="c8_process(1, 'div', ${r})">Divide by ${r}</button>`; } else { let m=Math.floor(Math.random()*3)+2; let c=Math.floor(Math.random()*8)+2; let x=Math.floor(Math.random()*8)+5; let isSub=Math.random()>0.5; let y=isSub?(m*x)-c:(m*x)+c; c8_curr_data={type:'age',m:m,c:c,x:x,y:y,isSub:isSub}; let phrase=isSub?`minus ${c}`:`plus ${c}`; stage.innerHTML=`<p class="story-text" style="margin:0 0 10px 0;"><b>👴 Age Riddle</b><br>"${m} times my age ${phrase} is ${y}."</p><p class="equation" id="c8-eq">${m}x ${isSub?'-':'+'} ${c} = ${y}</p><p id="c8-prompt" style="color:#555"><b>Step 1:</b> Which operation comes first?</p>`; ctrl.innerHTML=`<button class="step-btn" onclick="c8_process(1, 'add', ${c})">Add ${c}</button><button class="step-btn" onclick="c8_process(1, 'sub', ${c})">Subtract ${c}</button>`; } } 
+        function c8_process(stepAttempt,action,val){ const fb=document.getElementById('c8-feedback'); const d=c8_curr_data; const eq=document.getElementById('c8-eq'); const ctrl=document.getElementById('c8-controls'); const prompt=document.getElementById('c8-prompt'); if(c8_step===1){ let correct=false; if(d.type==='taxi'&&action==='sub')correct=true; if(d.type==='age'&&((d.isSub&&action==='add')||(!d.isSub&&action==='sub')))correct=true; if(correct){ fb.innerText="Correct! First we handle the constant."; fb.className="feedback correct"; playSound('correct'); if(d.type==='taxi')eq.innerText=`${d.r}x = ${d.y-d.b}`; else eq.innerText=`${d.m}x = ${d.m*d.x}`; c8_step=2; let coef=d.type==='taxi'?d.r:d.m; prompt.innerHTML="<b>Step 2:</b> Now isolate x."; setTimeout(()=>{ctrl.innerHTML=`<button class="step-btn" onclick="c8_process(2, 'div', ${coef})">Divide by ${coef}</button><button class="step-btn" onclick="c8_process(2, 'sub', ${coef})">Subtract ${coef}</button>`;},500); }else{ fb.innerText="Incorrect order. Try again."; fb.className="feedback wrong"; playSound('wrong'); } } else if(c8_step===2){ if(action==='div'){ fb.innerText=`🎉 Correct! x = ${d.x}. Puzzle Solved!`; fb.className="feedback correct"; eq.innerText=`x = ${d.x}`; ctrl.innerHTML=''; playSound('correct'); scoreWin(8); }else{ fb.innerText="Multiplication is undone by Division."; fb.className="feedback wrong"; playSound('wrong'); } } }
+
+        /* --- CLASS 8 POLYGON LOGIC --- */
+        function c8_setPolyMode(n) {
+            c8_poly_mode = n;
+            // Highlight buttons
+            ['quad','pent','hex','hept','oct'].forEach(k => document.getElementById(`btn-c8-p-${k}`).classList.remove('active'));
+            let key = (n===4)?'quad':(n===5)?'pent':(n===6)?'hex':(n===7)?'hept':'oct';
+            document.getElementById(`btn-c8-p-${key}`).classList.add('active');
+
+            // Set Info Text
+            let info = document.getElementById('c8-poly-info');
+            if(n === 4) {
+                info.innerHTML = "<b>Quadrilateral Area:</b> Split into two triangles using a diagonal.<br>Area = <b>½ × d × (h₁ + h₂)</b>";
+            } else {
+                let name = (n===5)?'Pentagon':(n===6)?'Hexagon':(n===7)?'Heptagon':'Octagon';
+                info.innerHTML = `<b>${name} Area:</b> Divide into ${n} equal triangles.<br>Area = ${n} × (½ × side × apothem)<br><b>Area = ½ × Perimeter × Apothem</b>`;
+            }
+
+            // Draw shape
+            c8_drawPoly(n);
+            
+            // Start Quiz
+            document.getElementById('c8-poly-quiz-section').style.display = 'block';
+            c8_generatePolyQuiz(true); // Don't reset score on tab switch, just gen problem
+        }
+
+        function c8_drawPoly(n) {
+            const container = document.getElementById('c8-poly-stage');
+            // Using SVG for easier drawing
+            let svgContent = '';
+            
+            if (n === 4) {
+                // Draw General Quadrilateral split by diagonal
+                // Points: (50,150), (250,50), (350,200), (150,300)
+                // Diagonal: (50,150) to (350,200)
+                // Heights dropping from (250,50) and (150,300) onto the diagonal line
+                
+                // Simplified visualization for clarity (Kite-like but general)
+                // Diagonal horizontal for easier visual understanding
+                svgContent = `
+                    <svg width="400" height="300" viewBox="0 0 400 300">
+                        <line x1="50" y1="150" x2="350" y2="150" stroke="#333" stroke-width="3" stroke-dasharray="5,5" />
+                        <text x="200" y="145" text-anchor="middle" fill="#333" font-weight="bold">d</text>
+                        
+                        <polygon points="50,150 200,50 350,150" fill="rgba(78, 205, 196, 0.2)" stroke="#333" stroke-width="2"/>
+                        <line x1="200" y1="50" x2="200" y2="150" stroke="red" stroke-width="2" />
+                        <text x="210" y="100" fill="red" font-weight="bold">h₁</text>
+
+                        <polygon points="50,150 220,280 350,150" fill="rgba(255, 107, 107, 0.2)" stroke="#333" stroke-width="2"/>
+                        <line x1="220" y1="280" x2="220" y2="150" stroke="blue" stroke-width="2" />
+                        <text x="230" y="220" fill="blue" font-weight="bold">h₂</text>
+                    </svg>
+                `;
+            } else {
+                // Regular Polygon Logic
+                let cx = 200, cy = 150, r = 100;
+                let pts = [];
+                for(let i=0; i<n; i++) {
+                    let angle = (i * 2 * Math.PI / n) - (Math.PI/2);
+                    let x = cx + r * Math.cos(angle);
+                    let y = cy + r * Math.sin(angle);
+                    pts.push(`${x},${y}`);
+                }
+                let polyStr = pts.join(" ");
+
+                // Central Lines (Triangulation)
+                let lines = "";
+                for(let i=0; i<n; i++) {
+                     // Parse point back
+                     let p = pts[i].split(',');
+                     lines += `<line x1="${cx}" y1="${cy}" x2="${p[0]}" y2="${p[1]}" stroke="#ccc" stroke-width="1" />`;
+                }
+
+                // Apothem Line (from center to midpoint of first side)
+                // First side is between pts[0] and pts[1]
+                // Actually, let's just do it straight down or right for visual clarity
+                // Let's take the bottom edge. For standard rotation -PI/2, bottom edge might vary.
+                // Let's genericize: Draw apothem to the midpoint of index 0 and 1
+                let p0 = pts[0].split(','), p1 = pts[1].split(',');
+                let mx = (parseFloat(p0[0]) + parseFloat(p1[0]))/2;
+                let my = (parseFloat(p0[1]) + parseFloat(p1[1]))/2;
+                
+                svgContent = `
+                    <svg width="400" height="300">
+                        <polygon points="${polyStr}" fill="rgba(255, 230, 109, 0.3)" stroke="#333" stroke-width="3"/>
+                        ${lines}
+                        <polygon points="${cx},${cy} ${p0[0]},${p0[1]} ${p1[0]},${p1[1]}" fill="rgba(255, 159, 28, 0.3)" />
+                        <line x1="${cx}" y1="${cy}" x2="${mx}" y2="${my}" stroke="red" stroke-width="2" stroke-dasharray="4"/>
+                        <text x="${(cx+mx)/2 + 10}" y="${(cy+my)/2}" fill="red" font-weight="bold">a</text>
+                        <text x="${mx}" y="${my-10}" fill="#333" font-weight="bold">s</text>
+                    </svg>
+                `;
+            }
+            container.innerHTML = svgContent;
+        }
+
+        function c8_generatePolyQuiz(skip) {
+            if(!skip) prepNewScore(8);
+            
+            // Clear previous feedback
+            document.getElementById('c8-poly-input').value = '';
+            document.getElementById('c8-poly-feedback').innerText = '';
+            document.getElementById('c8-poly-feedback').className = 'feedback';
+
+            let qText = "";
+            let area = 0;
+
+            if (c8_poly_mode === 4) {
+                // Quadrilateral
+                let d = Math.floor(Math.random()*10) + 10; // 10-20
+                let h1 = Math.floor(Math.random()*5) + 3;
+                let h2 = Math.floor(Math.random()*5) + 3;
+                area = 0.5 * d * (h1 + h2);
+                qText = `Quadrilateral: Diagonal d = ${d}, Offsets h₁ = ${h1}, h₂ = ${h2}`;
+            } else {
+                // Polygon
+                let s = Math.floor(Math.random()*8) + 4; // side
+                let a = Math.floor(Math.random()*5) + 3; // apothem (simplified integer for quiz)
+                let n = c8_poly_mode;
+                let perimeter = n * s;
+                area = 0.5 * perimeter * a;
+                let name = (n===5)?'Pentagon':(n===6)?'Hexagon':(n===7)?'Heptagon':'Octagon';
+                qText = `${name}: Side = ${s}, Apothem = ${a}`;
+            }
+
+            c8_poly_quiz.ans = area;
+            document.getElementById('c8-poly-question').innerHTML = qText + "<br>Calculate Total Area:";
+        }
+
+        function c8_checkPoly() {
+            let userVal = parseFloat(document.getElementById('c8-poly-input').value);
+            let fb = document.getElementById('c8-poly-feedback');
+            
+            if (Math.abs(userVal - c8_poly_quiz.ans) < 0.1) {
+                fb.innerText = "Correct! 🌟";
+                fb.className = "feedback correct";
+                playSound('correct');
+                scoreWin(8);
+            } else {
+                fb.innerText = "Check your calculation.";
+                fb.className = "feedback wrong";
+                playSound('wrong');
+            }
+        }
 
         c1_generate();
     </script>
