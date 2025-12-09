@@ -101,6 +101,9 @@
         .btn-cta { background: var(--primary); color: white !important; border-radius: 25px; padding: 8px 20px; }
         .btn-cta:hover { background: #ff5252; box-shadow: 0 4px 10px rgba(255, 107, 107, 0.3); }
 
+        /* Mobile Menu Toggle (Hidden on Desktop) */
+        .mobile-menu-btn { display: none; font-size: 1.8rem; background: none; border: none; cursor: pointer; color: var(--dark); }
+
         /* --- USER PROFILE BOX (HEADER) --- */
         #user-profile-box {
             display: none; /* Hidden by default */
@@ -262,10 +265,25 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            .main-nav { display: none; }
-            .site-header { justify-content: center; }
+            /* 1. Show the Hamburger Button */
+            .mobile-menu-btn { display: block; z-index: 10001; }
+
+            /* 2. Hide Main Nav by default, but allow .nav-active class to show it */
+            .main-nav { 
+                display: none; 
+                flex-direction: column; 
+                position: absolute; 
+                top: 70px; left: 0; right: 0; 
+                background: white; 
+                padding: 20px; 
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+                border-top: 1px solid #eee;
+            }
+            .main-nav.nav-active { display: flex; animation: fadeIn 0.3s; }
+
+            .site-header { justify-content: space-between; }
             .hero h1 { font-size: 2.2rem; }
-            #user-profile-box { position: absolute; top: 75px; right: 10px; background: white; border: 2px solid var(--secondary); z-index: 5000; }
+            #user-profile-box { position: absolute; top: 80px; right: 20px; background: white; border: 2px solid var(--secondary); z-index: 5000; display: none !important; } /* Hide profile on mobile nav initially */
         }
     </style>
 </head>
@@ -294,12 +312,14 @@
     <nav class="site-header">
         <a href="#" class="brand-logo" onclick="showSection('home')">Amica<span>Soft</span></a>
         
+        <button class="mobile-menu-btn" onclick="toggleMobileNav()">☰</button>
+
         <div class="nav-right">
-            <div class="main-nav">
-                <a onclick="showSection('home')" class="nav-link">Home</a>
-                <a onclick="showSection('about')" class="nav-link">About Us</a>
-                <a onclick="showSection('modules')" class="nav-link btn-cta">Start Learning</a>
-                <a onclick="showSection('contact')" class="nav-link">Contact</a>
+            <div class="main-nav" id="main-nav">
+                <a onclick="showSection('home'); toggleMobileNav()" class="nav-link">Home</a>
+                <a onclick="showSection('about'); toggleMobileNav()" class="nav-link">About Us</a>
+                <a onclick="showSection('modules'); toggleMobileNav()" class="nav-link btn-cta">Start Learning</a>
+                <a onclick="showSection('contact'); toggleMobileNav()" class="nav-link">Contact</a>
             </div>
 
             <div id="user-profile-box">
@@ -526,6 +546,16 @@
             document.querySelectorAll('.page-section').forEach(el => { el.classList.remove('active-section'); });
             document.getElementById(`section-${sectionId}`).classList.add('active-section');
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        /* --- MOBILE NAV LOGIC --- */
+        function toggleMobileNav() {
+            const nav = document.getElementById('main-nav');
+            if(nav.classList.contains('nav-active')) {
+                nav.classList.remove('nav-active');
+            } else {
+                nav.classList.add('nav-active');
+            }
         }
 
         /* --- AUDIO SYSTEM --- */
