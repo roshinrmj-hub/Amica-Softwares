@@ -133,7 +133,7 @@
         /* --- 3. PAGE SECTIONS & TRANSITIONS --- */
         .page-section { display: none; min-height: 90vh; padding: 40px 20px; animation: fadeInSection 0.6s ease-out; }
         .page-section.active-section { display: block; }
-        @keyframes fadeInSection { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInSection { from { opacity: 0; transform: translateY(15px); } to { transform: translateY(0); opacity: 1; } }
 
         /* --- 4. HOME PAGE STYLES --- */
         .hero { text-align: center; max-width: 900px; margin: 40px auto; padding: 0 20px; }
@@ -221,7 +221,43 @@
         .a-label { position: absolute; font-size: 0.9rem; color: blue; font-weight: bold; z-index: 10; white-space: nowrap; }
 
         .walker-track { position: relative; height: 60px; border-bottom: 4px solid #333; margin: 50px 20px; }
-        .walker-dot { width: 30px; height: 30px; background: var(--secondary); border-radius: 50%; border: 3px solid white; box-shadow: 0 0 10px rgba(0,0,0,0.3); position: absolute; left: 50%; top: -15px; transition: left 1s; transform: translateX(-50%); z-index: 5; }
+        .walker-dot { 
+            /* Kept for C6 logic, but hidden */
+            width: 30px; height: 30px; background: var(--secondary); border-radius: 50%; border: 3px solid white; box-shadow: 0 0 10px rgba(0,0,0,0.3); position: absolute; 
+            left: 50%; top: -15px; transition: left 1s; transform: translateX(-50%); z-index: 5; 
+            display: none; 
+        }
+        
+        /* NEW STYLES FOR C6 WALKING MAN */
+        .walker-man {
+            position: absolute;
+            left: 50%; 
+            top: -20px; /* Adjusted to sit on the line */
+            transition: left 1s; 
+            transform: translateX(-50%); 
+            z-index: 5;
+            width: 30px;
+            height: 30px;
+            /* Animation Container */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: walk-cycle 0.8s infinite steps(2);
+        }
+        
+        /* The Walking Man Icon (CSS art/emoji fallback) */
+        .walker-man::before {
+            content: '🚶'; /* Default walking emoji */
+            font-size: 2rem; 
+        }
+        
+        /* Optional keyframes for a visual walking effect if the emoji doesn't look animated */
+        /* @keyframes walk-cycle {
+             0% { transform: translateX(-50%) rotate(0deg); }
+            50% { transform: translateX(-50%) rotate(5deg); }
+            100% { transform: translateX(-50%) rotate(0deg); }
+        } */
+
         .walker-tick { position: absolute; top: 0; width: 1px; height: 10px; background: #555; }
         .walker-num { position: absolute; top: 20px; transform: translateX(-50%); font-size: 0.8rem; color: #555; }
         .graph-board { width: 400px; height: 400px; margin: 0 auto; background-color: #fff; background-image: linear-gradient(#ddd 1px, transparent 1px), linear-gradient(90deg, #ddd 1px, transparent 1px); background-size: 20px 20px; background-position: center; border: 2px solid #333; position: relative; cursor: crosshair; }
@@ -258,9 +294,64 @@
         /* CLASS 8 POLYGON STYLES */
         .poly-stage { width: 100%; height: 350px; display: flex; justify-content: center; align-items: center; background: white; border: 2px solid #eee; border-radius: 15px; position: relative; margin-top: 15px; }
         .poly-info-box { background: #e0f2f1; padding: 10px; border-radius: 10px; margin-bottom: 15px; border-left: 4px solid #4ECDC4; text-align: left;}
+
+        /* CLASS 3 STYLES */
+        .clock-face { width: 180px; height: 180px; background: white; border: 5px solid var(--dark); border-radius: 50%; position: relative; margin: 20px auto; }
+        .hand { position: absolute; bottom: 50%; left: 50%; background: var(--dark); transform-origin: bottom center; border-radius: 5px; }
+        .hour-hand { width: 6px; height: 50px; }
+        .minute-hand { width: 4px; height: 75px; }
+        .center-dot { width: 10px; height: 10px; background: var(--primary); border-radius: 50%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10; }
+        .hour-mark { 
+            position: absolute; width: 20px; height: 20px; line-height: 20px; text-align: center;
+            font-size: 0.9rem; font-weight: bold; color: var(--dark);
+            /* Center the box, then JS positions the box using calculated X/Y */
+            transform: translate(-50%, -50%); 
+        }
+        
+        .scale-balance { display: flex; justify-content: center; align-items: flex-end; height: 200px; margin: 30px 0; }
+        .pivot { width: 10px; height: 150px; background: #8D6E63; position: relative; z-index: 1; }
+        .beam { width: 300px; height: 10px; background: #5D4037; position: absolute; transition: transform 0.5s; z-index: 2; }
+        .pan { 
+            width: 100px; 
+            min-height: 40px; 
+            border: 4px solid #aaa; 
+            border-radius: 50% / 20px 20px 0 0; /* Updated for better visual */
+            background: #eee; 
+            position: absolute; 
+            bottom: 0; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            flex-wrap: wrap; 
+            padding: 5px; 
+        }
+        .pan-left { left: 50%; transform: translate(-200px, 15px); } /* Moved further out */
+        .pan-right { left: 50%; transform: translate(100px, 15px); } /* Moved further out */
+        .pan-item { font-size: 2rem; margin: 2px; }
+        .pan-content { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            margin: 0 5px; 
+        }
+        
+        .ruler-stage { width: 90%; max-width: 600px; height: 150px; border: 4px solid #8D6E63; background: #fffde7; margin: 30px auto; border-radius: 10px; position: relative; }
+        .ruler-item { height: 30px; background: var(--primary); position: absolute; top: 70px; }
+        .ruler-tick { position: absolute; top: 4px; width: 1px; background: #333; }
+        .ruler-label { position: absolute; top: 20px; font-size: 0.8rem; color: #333; }
+
+        /* CLASS 5 FRACTION STYLES */
+        .frac-stage { display: flex; justify-content: center; gap: 30px; align-items: center; min-height: 150px; margin: 20px 0; font-size: 2rem;}
+        .frac-box { width: 150px; height: 150px; border: 3px solid var(--dark); background: white; position: relative; }
+        .frac-num { position: relative; top: -5px; }
+        .frac-bar { display: inline-block; width: 30px; height: 3px; background: #333; margin: 0 5px; transform: translateY(-10px); }
+
+        .frac-circle { width: 100px; height: 100px; border-radius: 50%; border: 2px solid var(--dark); position: relative; margin: 0 10px; overflow: hidden; }
+        .frac-slice { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform-origin: 50% 50%; background: var(--primary); opacity: 0.7; }
         
         @keyframes popIn { from { transform: scale(0); } to { transform: scale(1); } }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { transform: translateY(0); opacity: 1; } }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.5); } 100% { transform: scale(1); } }
 
         /* Responsive */
@@ -399,7 +490,7 @@
                 </div>
 
                 <div id="c0-mode-order" style="display:none;">
-                    <div id="c0-order-instruction" class="story-text" style="font-size: 1.4rem;">Arrange Small to Big ⬆️</div>
+                    <div id="c0-order-instruction" class="story-text" style="font-align: 1.4rem;">Arrange Small to Big ⬆️</div>
                     <div id="c0-order-container" class="order-container"></div>
                     <div id="c0-order-feedback" class="feedback"></div>
                     <div class="controls"><button class="btn-action btn-new" onclick="c0_generate_order()">New Order ➡️</button></div>
@@ -409,15 +500,159 @@
             
             <div id="module-1" class="module-container"><div class="score-panel"><span class="score-text">📝 Test Score:</span><span class="score-val" id="score-1">0 / 0</span><button class="btn-reset" onclick="resetScore(1)">Start Test</button></div><h2 class="module-title">Class 1: Fun with Apples</h2><div class="controls"><button class="btn-action" onclick="c1_setMode('add')" style="background:#FFD166; color:#333">Addition (+)</button><button class="btn-action" onclick="c1_setMode('sub')" style="background:#EF476F; color:white">Subtraction (-)</button></div><p id="c1-instruction" class="story-text">Count the apples!</p><div class="fruit-stage" id="c1-visuals"></div><div class="equation"><span id="c1-eq">?</span></div><input type="number" id="c1-input" class="game-input" placeholder="?"><button class="btn-action" onclick="c1_check()">Check</button><button class="btn-action btn-new" onclick="c1_generate()">New Problem</button><div id="c1-feedback" class="feedback"></div></div>
             
-            <div id="module-2" class="module-container"><div class="score-panel"><span class="score-text">📝 Test Score:</span><span class="score-val" id="score-2">0 / 0</span><button class="btn-reset" onclick="resetScore(2)">Start Test</button></div><h2 class="module-title">Class 2: Multiplication Groups</h2><div id="c2-story" class="story-text">Loading story...</div><div id="c2-stage" class="grouping-stage"></div><div class="equation"><span id="c2-eq">?</span></div><div class="controls"><input type="number" id="c2-input" class="game-input" placeholder="?"><button class="btn-action" onclick="c2_check()">Check Answer</button><button class="btn-action btn-new" onclick="c2_generate()">New Story</button></div><div id="c2-feedback" class="feedback"></div></div>
+            <div id="module-2" class="module-container">
+                <div class="score-panel"><span class="score-text">📝 Test Score:</span><span class="score-val" id="score-2">0 / 0</span><button class="btn-reset" onclick="resetScore(2)">Start Test</button></div>
+                <h2 class="module-title">Class 2: Multiplication & Division</h2>
+                
+                <div class="controls">
+                    <button class="app-btn active" id="btn-c2-mult" onclick="c2_setMode('mult')">Multiplication (×)</button>
+                    <button class="app-btn" id="btn-c2-div" onclick="c2_setMode('div')">Division (÷)</button>
+                </div>
+
+                <div id="c2-mult-section">
+                    <div id="c2-story" class="story-text">Loading story...</div>
+                    <div id="c2-stage" class="grouping-stage"></div>
+                    <div class="equation"><span id="c2-eq">?</span></div>
+                    <div class="controls"><input type="number" id="c2-input" class="game-input" placeholder="?"><button class="btn-action" onclick="c2_check()">Check Answer</button><button class="btn-action btn-new" onclick="c2_generate()">New Story</button></div>
+                    <div id="c2-feedback" class="feedback"></div>
+                </div>
+
+                <div id="c2-div-section" style="display:none;">
+                    <div id="c2-div-story" class="story-text">Loading division story...</div>
+                    <div style="font-weight: bold; color: #777;">The Pile (Total)</div>
+                    <div id="c2-div-pile" class="pile-area"></div>
+                    <div style="font-size: 2em; color:#ccc;">⬇️ Drag/Share ⬇️</div>
+                    <div style="font-weight: bold; color: #777;">Friends:</div>
+                    <div id="c2-div-stage" class="baskets-stage"></div>
+                    <div class="controls" style="margin-top: 30px; border-top: 2px solid #eee; padding-top: 20px;">
+                        <div class="equation" style="margin: 0 15px 0 0; font-size: 1.5rem;">How many per friend?</div>
+                        <input type="number" id="c2-div-input" class="game-input" placeholder="?">
+                        <button class="btn-action" onclick="c2_div_check()">Check Answer</button>
+                        <button class="btn-action btn-new" onclick="c2_div_generate()">New Story</button>
+                    </div>
+                    <div id="c2-div-feedback" class="feedback"></div>
+                </div>
+            </div>
             
-            <div id="module-3" class="module-container"><div class="score-panel"><span class="score-text">📝 Test Score:</span><span class="score-val" id="score-3">0 / 0</span><button class="btn-reset" onclick="resetScore(3)">Start Test</button></div><h2 class="module-title">Class 3: Sharing with Friends</h2><div id="c3-story" class="story-text">Loading story...</div><div style="font-weight: bold; color: #777;">The Pile (Total)</div><div id="c3-pile" class="pile-area"></div><div style="font-size: 2em; color:#ccc;">⬇️ Drag/Share ⬇️</div><div style="font-weight: bold; color: #777;">Friends:</div><div id="c3-stage" class="baskets-stage"></div><div class="controls" style="margin-top: 30px; border-top: 2px solid #eee; padding-top: 20px;"><div class="equation" style="margin: 0 15px 0 0; font-size: 1.5rem;">How many per friend?</div><input type="number" id="c3-input" class="game-input" placeholder="?"><button class="btn-action" onclick="c3_check()">Check Answer</button><button class="btn-action btn-new" onclick="c3_generate()">New Story</button></div><div id="c3-feedback" class="feedback"></div></div>
+            <div id="module-3" class="module-container">
+                <div class="score-panel"><span class="score-text">📝 Test Score:</span><span class="score-val" id="score-3">0 / 0</span><button class="btn-reset" onclick="resetScore(3)">Start Test</button></div>
+                <h2 class="module-title">Class 3: Measurement & Money</h2>
+                
+                <div class="controls">
+                    <button class="app-btn active" id="btn-c3-currency" onclick="c3_switchMode('currency')">Currency (₹)</button>
+                    <button class="app-btn" id="btn-c3-time" onclick="c3_switchMode('time')">Time (Clock ⏰)</button>
+                    <button class="app-btn" id="btn-c3-weight" onclick="c3_switchMode('weight')">Weight (Scales ⚖️)</button>
+                    <button class="app-btn" id="btn-c3-length" onclick="c3_switchMode('length')">Length (Ruler 📏)</button>
+                </div>
+                
+                <div id="c3-mode-currency">
+                    <div id="c3-currency-story" class="story-text">Loading currency quiz...</div>
+                    <div class="equation" style="font-size: 2rem;"><span id="c3-currency-eq">₹? + ₹? = ₹?</span></div>
+                    <div class="controls">
+                        <label>Enter total amount (₹):</label>
+                        <input type="number" id="c3-currency-input" class="game-input" placeholder="₹">
+                        <button class="btn-action" onclick="c3_currency_check()">Check</button>
+                        <button class="btn-action btn-new" onclick="c3_currency_generate()">New Quiz</button>
+                    </div>
+                    <div id="c3-currency-feedback" class="feedback"></div>
+                </div>
+
+                <div id="c3-mode-time" style="display:none;">
+                    <div id="c3-time-story" class="story-text">Loading time quiz...</div>
+                    <div class="clock-face" id="c3-clock-face">
+                        <div class="hand hour-hand" id="c3-hour-hand"></div>
+                        <div class="hand minute-hand" id="c3-minute-hand"></div>
+                        <div class="center-dot"></div>
+                    </div>
+                    <div class="controls">
+                        <label>What time is it (HH:MM)?</label>
+                        <input type="text" id="c3-time-input" class="game-input" placeholder="10:30">
+                        <button class="btn-action" onclick="c3_time_check()">Check</button>
+                        <button class="btn-action btn-new" onclick="c3_time_generate()">New Clock</button>
+                    </div>
+                    <div id="c3-time-feedback" class="feedback"></div>
+                </div>
+
+                <div id="c3-mode-weight" style="display:none;">
+                    <div id="c3-weight-story" class="story-text">Balance the scale with the correct weight (in kg)!</div>
+                    <div class="scale-balance" style="position:relative;">
+                        <div class="beam" id="c3-beam" style="position:absolute; top: 100px; left: 50%; transform: translate(-50%, 0) rotate(-5deg);"></div>
+                        <div class="pivot" style="position:absolute; bottom: 0;"></div>
+                        <div class="pan pan-left" id="c3-pan-left"></div>
+                        <div class="pan pan-right" id="c3-pan-right"></div>
+                    </div>
+                    <div class="controls">
+                        <label>Add weight (kg) to right pan:</label>
+                        <input type="number" id="c3-weight-input" class="game-input" placeholder="kg">
+                        <button class="btn-action" onclick="c3_weight_check()">Check</button>
+                        <button class="btn-action btn-new" onclick="c3_weight_generate()">New Challenge</button>
+                    </div>
+                    <div id="c3-weight-feedback" class="feedback"></div>
+                </div>
+                
+                <div id="c3-mode-length" style="display:none;">
+                    <div id="c3-length-story" class="story-text">Measure the red block!</div>
+                    <div class="ruler-stage" id="c3-ruler-stage">
+                        <div id="c3-ruler-item" class="ruler-item"></div>
+                    </div>
+                    <div class="controls">
+                        <label>Enter length (cm):</label>
+                        <input type="number" id="c3-length-input" class="game-input" placeholder="cm">
+                        <button class="btn-action" onclick="c3_length_check()">Check</button>
+                        <button class="btn-action btn-new" onclick="c3_length_generate()">New Item</button>
+                    </div>
+                    <div id="c3-length-feedback" class="feedback"></div>
+                </div>
+
+            </div>
             
-            <div id="module-5" class="module-container"><h2 class="module-title">Class 5: Shape Explorer</h2><p class="story-text">Explore properties. No score for exploration.</p><div class="controls"><button class="btn-action" onclick="c5_show('rect')" style="background:var(--accent); color:#333">Rectangle</button><button class="btn-action" onclick="c5_show('circle')" style="background:var(--primary)">Circle</button><button class="btn-action" onclick="c5_show('tri')" style="background:var(--secondary)">Triangle</button></div><div class="shape-stage"><div id="c5-shape-area"></div></div><div id="c5-info" class="story-text">Select a shape above...</div><div class="controls"><button class="btn-action" onclick="c5_highlight('corners')">Show Corners</button><button class="btn-action" onclick="c5_highlight('sides')" style="background: #FF9F1C;">Show Edges</button></div></div>
+            <div id="module-5" class="module-container">
+                <h2 class="module-title">Class 5: Shapes & Fractions</h2>
+                <div class="controls">
+                    <button class="app-btn active" id="btn-c5-explore" onclick="c5_switchMode('explore')">Shape Explorer</button>
+                    <button class="app-btn" id="btn-c5-frac" onclick="c5_switchMode('frac')">Fractions Quiz</button>
+                </div>
+                
+                <div id="c5-mode-explore">
+                    <p class="story-text">Explore properties. No score for exploration.</p>
+                    <div class="controls">
+                        <button class="btn-action" onclick="c5_show('rect')" style="background:var(--accent); color:#333">Rectangle</button>
+                        <button class="btn-action" onclick="c5_show('circle')" style="background:var(--primary)">Circle</button>
+                        <button class="btn-action" onclick="c5_show('tri')" style="background:var(--secondary)">Triangle</button>
+                    </div>
+                    <div class="shape-stage"><div id="c5-shape-area"></div></div>
+                    <div id="c5-info" class="story-text">Select a shape above...</div>
+                    <div class="controls">
+                        <button class="btn-action" onclick="c5_highlight('corners')">Show Corners</button>
+                        <button class="btn-action" onclick="c5_highlight('sides')" style="background: #FF9F1C;">Show Edges</button>
+                    </div>
+                </div>
+
+                <div id="c5-mode-frac" style="display:none;">
+                    <div class="score-panel"><span class="score-text">📝 Test Score:</span><span class="score-val" id="score-5">0 / 0</span><button class="btn-reset" onclick="resetScore(5)">Start Test</button></div>
+                    <div class="controls">
+                        <button class="app-btn active" id="btn-c5-f-add" onclick="c5_frac_setMode('add')">Addition (+)</button>
+                        <button class="app-btn" id="btn-c5-f-sub" onclick="c5_frac_setMode('sub')">Subtraction (-)</button>
+                        <button class="app-btn" id="btn-c5-f-mult" onclick="c5_frac_setMode('mult')">Multiplication (×)</button>
+                    </div>
+                    <div id="c5-frac-story" class="story-text">Loading fraction problem...</div>
+                    <div id="c5-frac-stage" class="frac-stage"></div>
+                    <div class="equation" style="font-size: 1.5rem;">Answer (Numerator/Denominator):</div>
+                    <div class="controls">
+                        <input type="number" id="c5-frac-num" class="game-input" placeholder="Num" style="width: 80px;">
+                        /
+                        <input type="number" id="c5-frac-den" class="game-input" placeholder="Den" style="width: 80px;">
+                        <button class="btn-action" onclick="c5_frac_check()">Check</button>
+                        <button class="btn-action btn-new" onclick="c5_frac_generate()">New Problem</button>
+                    </div>
+                    <div id="c5-frac-feedback" class="feedback"></div>
+                </div>
+
+            </div>
             
-            <div id="module-6" class="module-container"><div class="score-panel"><span class="score-text">📝 Test Score:</span><span class="score-val" id="score-6">0 / 0</span><button class="btn-reset" onclick="resetScore(6)">Start Test</button></div><h2 class="module-title">Class 6: Integers & Graphs</h2><div class="controls"><button class="app-btn active" id="btn-c6-line" onclick="c6_switchMode('line')">Number Line</button><button class="app-btn" id="btn-c6-graph" onclick="c6_switchMode('graph')">Graph Quiz</button></div><div id="c6-mode-walker"><p class="story-text">Integers: Walk Left for Negative (-), Right for Positive (+).</p><div class="walker-track" id="c6-walker-track"><div id="c6-walker" class="walker-dot"></div></div><div class="controls"><label>Move to: </label><input type="number" id="c6-input" class="game-input" placeholder="-5"><button class="btn-action" onclick="c6_move()">Walk</button></div><div id="c6-feedback" class="feedback"></div></div><div id="c6-mode-graph" style="display:none;"><p id="c6-graph-instruction" class="story-text" style="font-weight:bold; color: var(--dark);">Tap the Grid at (2, 3)</p><div class="graph-board" onclick="c6_plotClick(event)" id="c6-board"><div class="axis-x"></div><div class="axis-y"></div><div id="c6-plot-dot" class="plot-point"></div></div><div id="c6-graph-feedback" class="feedback"></div><button class="btn-action btn-new" onclick="c6_newGraphProblem()">New Point</button></div></div>
+            <div id="module-6" class="module-container"><div class="score-panel"><span class="score-text">📝 Test Score:</span><span class="score-val" id="score-6">0 / 0</span><button class="btn-reset" onclick="resetScore(6)">Start Test</button></div><h2 class="module-title">Class 6: Integers & Graphs</h2><div class="controls"><button class="app-btn active" id="btn-c6-line" onclick="c6_switchMode('line')">Number Line</button><button class="app-btn" id="btn-c6-graph" onclick="c6_switchMode('graph')">Graph Quiz</button></div><div id="c6-mode-walker"><p class="story-text">Integers: Walk Left for Negative (-), Right for Positive (+).</p><div class="walker-track" id="c6-walker-track"><div id="c6-walker" class="walker-dot"></div><div id="c6-walker-man" class="walker-man"></div></div><div class="controls"><label>Move to: </label><input type="number" id="c6-input" class="game-input" placeholder="-5"><button class="btn-action" onclick="c6_move()">Walk</button></div><div id="c6-feedback" class="feedback"></div></div><div id="c6-mode-graph" style="display:none;"><p id="c6-graph-instruction" class="story-text" style="font-weight:bold; color: var(--dark);">Tap the Grid at (2, 3)</p><div class="graph-board" onclick="c6_plotClick(event)" id="c6-board"><div class="axis-x"></div><div class="axis-y"></div><div id="c6-plot-dot" class="plot-point"></div></div><div id="c6-graph-feedback" class="feedback"></div><button class="btn-action btn-new" onclick="c6_newGraphProblem()">New Point</button></div></div>
             
-            <div id="module-7" class="module-container"><h2 class="module-title">Class 7: Shape Constructor</h2><p class="story-text">Constructor Tool (Ungraded Practice)</p><div class="controls"><button class="app-btn active" id="btn-c7-circle" onclick="c7_setShapeMode('circle')">Circle</button><button class="app-btn" id="btn-c7-square" onclick="c7_setShapeMode('square')">Square</button><button class="app-btn" id="btn-c7-tri" onclick="c7_setShapeMode('tri')">Eq. Triangle</button></div><div class="controls" style="background: #fff3e0; padding: 15px; border-radius: 10px;"><label id="c7-label">Radius (cm): </label><input type="number" id="c7-dim" class="game-input" min="1" max="6" value="3" style="width: 80px;"><button class="btn-action" onclick="c7_construct()">Draw & Calc</button></div><div id="c7-stage" class="constructor-stage"><span style="color:#aaa;">Shape will appear here...</span></div><div id="c7-results" class="result-panel"><h3>Calculated Properties:</h3><div id="c7-calc-content"></div></div></div>
+            <div id="module-7" class="module-container"><h2 class="module-title">Class 7: Shape Constructor</h2><p class="story-text">Constructor Tool (Ungraded Practice)</p><div class="controls"><button class="app-btn active" id="btn-c7-circle" onclick="c7_setShapeMode('circle')">Circle</button><button class="app-btn" id="btn-c7-square" onclick="c7_setShapeMode('square')">Square</button><button class="app-btn" id="btn-c7-tri" onclick="c7_setShapeMode('tri')">Eq. Triangle</button></div><div class="controls" style="background: #fff3e0; padding: 15px; border-radius: 10px;"><label id="c7-label">Radius (cm): </label><input type="number" id="c7-dim" class="game-input" min="1" max="6" value="3" style="width: 80px;"><button class="btn-action" onclick="c7_construct()">Draw & Calc</button></div><div id="c7-stage" class="constructor-stage"><span style="color:#aaa">Shape will appear here...</span></div><div id="c7-results" class="result-panel"><h3>Calculated Properties:</h3><div id="c7-calc-content"></div></div></div>
             
             <div id="module-8" class="module-container">
                 <div class="score-panel"><span class="score-text">📝 Test Score:</span><span class="score-val" id="score-8">0 / 0</span><button class="btn-reset" onclick="resetScore(8)">Start Test</button></div>
@@ -587,13 +822,18 @@
         }
 
         /* --- GAME LOGIC --- */
-        let scores = { 0:{c:0,t:0,s:false}, 1:{c:0,t:0,s:false}, 2:{c:0,t:0,s:false}, 3:{c:0,t:0,s:false}, 6:{c:0,t:0,s:false}, 8:{c:0,t:0,s:false} };
+        let scores = { 0:{c:0,t:0,s:false}, 1:{c:0,t:0,s:false}, 2:{c:0,t:0,s:false}, 3:{c:0,t:0,s:false}, 5:{c:0,t:0,s:false}, 6:{c:0,t:0,s:false}, 8:{c:0,t:0,s:false} }; // ADDED SCORE FOR C5
         function prepNewScore(modId) { if(scores[modId]) { scores[modId].s = false; scores[modId].t++; updateScoreUI(modId); } }
         function scoreWin(modId) { if(scores[modId] && !scores[modId].s) { scores[modId].c++; scores[modId].s = true; updateScoreUI(modId); } }
         function resetScore(modId) { 
             if(scores[modId]) { scores[modId].c = 0; scores[modId].t = 1; scores[modId].s = false; updateScoreUI(modId); 
             if(modId===0) { if(c0_mode==='count') c0_generate(true); else if(c0_mode==='ba') c0_generate_ba(true); else c0_generate_order(true); }
-            if(modId===1) c1_generate(true); if(modId===2) c2_generate(true); if(modId===3) c3_generate(true); if(modId===6) c6_newGraphProblem(true); if(modId===8) { 
+            if(modId===1) c1_generate(true); 
+            if(modId===2) { if(c2_mode==='mult') c2_generate(true); else c2_div_generate(true); } // UPDATED FOR C2
+            if(modId===3) c3_generate(true); // C3 Will handle its own mode reset
+            if(modId===5) c5_frac_generate(true); // C5 Fraction reset
+            if(modId===6) c6_newGraphProblem(true); 
+            if(modId===8) { 
                 if(c8_tab==='poly') c8_generatePolyQuiz(true); else c8_generateProblem(true); 
             }} 
         }
@@ -607,8 +847,9 @@
             
             if(id===0) { c0_switchMode('count'); }
             if(id===1 && scores[1].t===0) c1_generate(); 
-            if(id===2 && scores[2].t===0) c2_generate(); 
-            if(id===3 && scores[3].t===0) c3_generate(); 
+            if(id===2) { c2_setMode('mult'); if(scores[2].t===0) c2_generate(); } // UPDATED FOR C2
+            if(id===3) { c3_switchMode('currency'); if(scores[3].t===0) c3_currency_generate(); } // UPDATED FOR C3
+            if(id===5) { c5_switchMode('explore'); if(scores[5].t===0) c5_frac_generate(); } // UPDATED FOR C5
             if(id===6) { c6_switchMode('line'); if(scores[6].t===0) c6_newGraphProblem(); } 
             if(id===7) c7_setShapeMode('circle'); 
             if(id===8 && scores[8].t===0) c8_setAlgMode('taxi'); 
@@ -793,12 +1034,372 @@
             }
         }
 
-        /* --- C1 --- */ 
-        let c1_mode='add', c1_ans; function c1_setMode(m){c1_mode=m;c1_generate();} function c1_generate(skip){ if(!skip) prepNewScore(1); let s=document.getElementById('c1-visuals'); document.getElementById('c1-feedback').innerText=''; document.getElementById('c1-input').value=''; if(c1_mode==='add'){ let n1=Math.floor(Math.random()*5)+1, n2=Math.floor(Math.random()*5)+1; c1_ans=n1+n2; document.getElementById('c1-eq').innerText=`${n1} + ${n2} = ?`; s.innerHTML=getApples(n1)+' <span style="font-size:3rem; margin:0 10px;">+</span> '+getApples(n2); document.getElementById('c1-instruction').innerText="Count all apples together!"; } else { let n1=Math.floor(Math.random()*5)+4, n2=Math.floor(Math.random()*3)+1; if(n1<=n2) n1=n2+2; c1_ans=n1-n2; document.getElementById('c1-eq').innerText=`${n1} - ${n2} = ?`; let h=''; for(let i=0;i<n1;i++) h+=(i>=(n1-n2))?`<div class="apple eaten"><div class="cross-line"></div></div>`:`<div class="apple"></div>`; s.innerHTML=h; document.getElementById('c1-instruction').innerText=`You have ${n1} apples. Take away ${n2}.`; } } function getApples(n){let h='';for(let i=0;i<n;i++)h+='<div class="apple"></div>';return `<div style="display:inline-block">${h}</div>`;} function c1_check(){ let u=parseInt(document.getElementById('c1-input').value),f=document.getElementById('c1-feedback'); if(u===c1_ans){ f.innerText="Correct! 🎉";f.className="feedback correct"; playSound('correct'); scoreWin(1); }else{ f.innerText="Try again ❌";f.className="feedback wrong"; playSound('wrong'); } }
-        /* C2 */ let c2_ans=0; const c2_themes=[{item:'🍎',container:'Boxes',name:'Apples'},{item:'🍪',container:'Jars',name:'Cookies'}]; function c2_generate(skip){ if(!skip) prepNewScore(2); const t=c2_themes[Math.floor(Math.random()*2)]; let b=Math.floor(Math.random()*3)+2, i=Math.floor(Math.random()*4)+2; c2_ans=b*i; document.getElementById('c2-input').value=''; document.getElementById('c2-feedback').innerText=''; document.getElementById('c2-story').innerText=`${b} ${t.container}. Each has ${i} ${t.name}. Total?`; document.getElementById('c2-eq').innerText=`${b} × ${i} = ?`; const s=document.getElementById('c2-stage'); s.innerHTML=''; for(let k=0;k<b;k++){ let d=document.createElement('div');d.className='mult-box'; for(let j=0;j<i;j++){let sp=document.createElement('span');sp.className='emoji-item';sp.innerText=t.item;d.appendChild(sp);} s.appendChild(d); } } function c2_check(){ let u=parseInt(document.getElementById('c2-input').value),f=document.getElementById('c2-feedback'); if(u===c2_ans){f.innerText="Correct! 🌟";f.className="feedback correct"; playSound('correct'); scoreWin(2);}else{f.innerText="Count carefully!";f.className="feedback wrong"; playSound('wrong');} }
-        /* C3 */ let c3_ans=0,c3_gr=0,c3_t={}; const c3_ts=[{item:'🍌',group:'Monkeys',icon:'🐵'},{item:'🍬',group:'Kids',icon:'🧒'}]; function c3_generate(skip){ if(!skip) prepNewScore(3); c3_t=c3_ts[Math.floor(Math.random()*2)]; c3_ans=Math.floor(Math.random()*3)+2; c3_gr=Math.floor(Math.random()*3)+2; let tot=c3_ans*c3_gr; document.getElementById('c3-input').value=''; document.getElementById('c3-feedback').innerText=''; document.getElementById('c3-story').innerText=`Share ${tot} ${c3_t.item} among ${c3_gr} ${c3_t.group}.`; let p=''; for(let i=0;i<tot;i++)p+=`<span class="emoji-item">${c3_t.item}</span>`; document.getElementById('c3-pile').innerHTML=p; const s=document.getElementById('c3-stage'); s.innerHTML=''; for(let i=0;i<c3_gr;i++){ let c=document.createElement('div');c.className='recipient-container'; let a=document.createElement('div');a.className='recipient-avatar';a.innerText=c3_t.icon; a.style.filter=`hue-rotate(${i*60}deg)`; let b=document.createElement('div');b.className='recipient-box';b.id=`c3-box-${i}`; c.appendChild(a);c.appendChild(b);s.appendChild(c); } } function c3_check(){ let u=parseInt(document.getElementById('c3-input').value),f=document.getElementById('c3-feedback'); if(u===c3_ans){ f.innerText="Correct! ✅";f.className="feedback correct"; playSound('correct'); scoreWin(3); document.getElementById('c3-pile').innerHTML=''; for(let i=0;i<c3_gr;i++){ let b=document.getElementById(`c3-box-${i}`);b.classList.add('filled'); for(let j=0;j<c3_ans;j++){let it=document.createElement('span');it.className='emoji-item';it.innerText=c3_t.item;b.appendChild(it);} } }else{f.innerText="Not quite. Try sharing again.";f.className="feedback wrong"; playSound('wrong');} }
-        /* C5 */ 
+        /* --- C1: ADDITION & SUBTRACTION --- */ 
+        let c1_mode='add', c1_ans; 
+        function c1_setMode(m){c1_mode=m;c1_generate();} 
+        function c1_generate(skip){ 
+            if(!skip) prepNewScore(1); 
+            let s=document.getElementById('c1-visuals'); 
+            document.getElementById('c1-feedback').innerText=''; 
+            document.getElementById('c1-input').value=''; 
+            if(c1_mode==='add'){ 
+                let n1=Math.floor(Math.random()*5)+1, n2=Math.floor(Math.random()*5)+1; 
+                c1_ans=n1+n2; 
+                document.getElementById('c1-eq').innerText=`${n1} + ${n2} = ?`; 
+                s.innerHTML=getApples(n1)+' <span style="font-size:3rem; margin:0 10px;">+</span> '+getApples(n2); 
+                document.getElementById('c1-instruction').innerText="Count all apples together!"; 
+            } else { 
+                let n1=Math.floor(Math.random()*5)+4, n2=Math.floor(Math.random()*3)+1; 
+                if(n1<=n2) n1=n2+2; 
+                c1_ans=n1-n2; 
+                document.getElementById('c1-eq').innerText=`${n1} - ${n2} = ?`; 
+                let h=''; 
+                for(let i=0;i<n1;i++) h+=(i>=(n1-n2))?`<div class="apple eaten"><div class="cross-line"></div></div>`:`<div class="apple"></div>`; 
+                s.innerHTML=h; 
+                document.getElementById('c1-instruction').innerText=`You have ${n1} apples. Take away ${n2}.`; 
+            } 
+        } 
+        function getApples(n){let h='';for(let i=0;i<n;i++)h+='<div class="apple"></div>';return `<div style="display:inline-block">${h}</div>`;} 
+        function c1_check(){ 
+            let u=parseInt(document.getElementById('c1-input').value),f=document.getElementById('c1-feedback'); 
+            if(u===c1_ans){ 
+                f.innerText="Correct! 🎉";f.className="feedback correct"; 
+                playSound('correct'); scoreWin(1); 
+            }else{ 
+                f.innerText="Try again ❌";f.className="feedback wrong"; 
+                playSound('wrong'); 
+            } 
+        }
+        
+        /* --- C2: MULTIPLICATION & DIVISION (UPDATED) --- */ 
+        let c2_mode='mult'; 
+        let c2_ans=0; 
+        const c2_themes=[{item:'🍎',container:'Boxes',name:'Apples'},{item:'🍪',container:'Jars',name:'Cookies'}]; 
+        const c2_div_themes=[{item:'🍌',group:'Monkeys',icon:'🐵'},{item:'🍬',group:'Kids',icon:'🧒'}];
+
+        function c2_setMode(m) {
+            c2_mode = m;
+            document.getElementById('c2-mult-section').style.display = (m === 'mult') ? 'block' : 'none';
+            document.getElementById('c2-div-section').style.display = (m === 'div') ? 'block' : 'none';
+            document.getElementById('btn-c2-mult').classList.toggle('active', m === 'mult');
+            document.getElementById('btn-c2-div').classList.toggle('active', m === 'div');
+            
+            if(m === 'mult') c2_generate();
+            if(m === 'div') c2_div_generate();
+        }
+
+        // 1. MULTIPLICATION LOGIC
+        function c2_generate(skip){ 
+            if(!skip) prepNewScore(2); 
+            const t=c2_themes[Math.floor(Math.random()*2)]; 
+            let b=Math.floor(Math.random()*3)+2, i=Math.floor(Math.random()*4)+2; 
+            c2_ans=b*i; 
+            document.getElementById('c2-input').value=''; 
+            document.getElementById('c2-feedback').innerText=''; 
+            document.getElementById('c2-story').innerText=`${b} ${t.container}. Each has ${i} ${t.name}. Total?`; 
+            document.getElementById('c2-eq').innerText=`${b} × ${i} = ?`; 
+            const s=document.getElementById('c2-stage'); 
+            s.innerHTML=''; 
+            for(let k=0;k<b;k++){ 
+                let d=document.createElement('div');d.className='mult-box'; 
+                for(let j=0;j<i;j++){let sp=document.createElement('span');sp.className='emoji-item';sp.innerText=t.item;d.appendChild(sp);} 
+                s.appendChild(d); 
+            } 
+        } 
+        function c2_check(){ 
+            let u=parseInt(document.getElementById('c2-input').value),f=document.getElementById('c2-feedback'); 
+            if(u===c2_ans){f.innerText="Correct! 🌟";f.className="feedback correct"; playSound('correct'); scoreWin(2);}else{f.innerText="Count carefully!";f.className="feedback wrong"; playSound('wrong');} 
+        }
+
+        // 2. DIVISION LOGIC (MOVED FROM C3)
+        let c2_div_ans=0, c2_div_gr=0, c2_div_t={}; 
+        function c2_div_generate(skip){ 
+            if(!skip) prepNewScore(2); // Use C2 score
+            c2_div_t=c2_div_themes[Math.floor(Math.random()*2)]; 
+            c2_div_ans=Math.floor(Math.random()*3)+2; // Items per person
+            c2_div_gr=Math.floor(Math.random()*3)+2; // Number of groups/people
+            let tot=c2_div_ans*c2_div_gr; 
+            document.getElementById('c2-div-input').value=''; 
+            document.getElementById('c2-div-feedback').innerText=''; 
+            document.getElementById('c2-div-story').innerText=`Share ${tot} ${c2_div_t.item} among ${c2_div_gr} ${c2_div_t.group}. How many does each get?`; 
+            
+            let p=''; 
+            for(let i=0;i<tot;i++)p+=`<span class="emoji-item">${c2_div_t.item}</span>`; 
+            document.getElementById('c2-div-pile').innerHTML=p; 
+            
+            const s=document.getElementById('c2-div-stage'); 
+            s.innerHTML=''; 
+            for(let i=0;i<c2_div_gr;i++){ 
+                let c=document.createElement('div');c.className='recipient-container'; 
+                let a=document.createElement('div');a.className='recipient-avatar';a.innerText=c2_div_t.icon; 
+                a.style.filter=`hue-rotate(${i*60}deg)`; 
+                let b=document.createElement('div');b.className='recipient-box';b.id=`c2-div-box-${i}`; 
+                c.appendChild(a);c.appendChild(b);s.appendChild(c); 
+            } 
+        } 
+        function c2_div_check(){ 
+            let u=parseInt(document.getElementById('c2-div-input').value),f=document.getElementById('c2-div-feedback'); 
+            if(u===c2_div_ans){ 
+                f.innerText="Correct! ✅";f.className="feedback correct"; 
+                playSound('correct'); scoreWin(2); 
+                document.getElementById('c2-div-pile').innerHTML=''; 
+                for(let i=0;i<c2_div_gr;i++){ 
+                    let b=document.getElementById(`c2-div-box-${i}`);b.classList.add('filled'); 
+                    for(let j=0;j<c2_div_ans;j++){let it=document.createElement('span');it.className='emoji-item';it.innerText=c2_div_t.item;b.appendChild(it);} 
+                } 
+            }else{f.innerText="Not quite. Try sharing again.";f.className="feedback wrong"; playSound('wrong');} 
+        }
+
+        /* --- C3: MEASUREMENT & MONEY (NEW STRUCTURE & FIXES) --- */
+        let c3_mode = 'currency';
+        let c3_currency_ans = 0;
+        let c3_time_ans = "";
+        let c3_weight_ans = 0;
+        let c3_length_ans = 0;
+        
+        function c3_switchMode(mode) {
+            c3_mode = mode;
+            ['currency', 'time', 'weight', 'length'].forEach(m => {
+                document.getElementById(`c3-mode-${m}`).style.display = (m === mode) ? 'block' : 'none';
+                document.getElementById(`btn-c3-${m}`).classList.toggle('active', m === mode);
+            });
+            // Auto start the selected game
+            if(mode === 'currency') c3_currency_generate();
+            if(mode === 'time') c3_time_generate();
+            if(mode === 'weight') c3_weight_generate();
+            if(mode === 'length') c3_length_generate();
+        }
+
+        // 1. CURRENCY LOGIC
+        function c3_currency_generate(skip) {
+            if(!skip) prepNewScore(3);
+            let n1 = Math.floor(Math.random() * 5) * 10 + 5; // 5, 15, 25... 45
+            let n2 = Math.floor(Math.random() * 5) * 10 + 5; // 5, 15, 25... 45
+            c3_currency_ans = n1 + n2;
+
+            document.getElementById('c3-currency-input').value = '';
+            document.getElementById('c3-currency-feedback').innerText = '';
+            document.getElementById('c3-currency-story').innerText = `You bought a toy for ₹${n1} and sweets for ₹${n2}. How much did you spend in total?`;
+            document.getElementById('c3-currency-eq').innerText = `₹${n1} + ₹${n2} = ₹?`;
+        }
+
+        function c3_currency_check() {
+            let u = parseInt(document.getElementById('c3-currency-input').value);
+            let f = document.getElementById('c3-currency-feedback');
+            if (u === c3_currency_ans) {
+                f.innerText = `Correct! Total spent is ₹${c3_currency_ans}. 🎉`;
+                f.className = "feedback correct";
+                playSound('correct'); scoreWin(3);
+            } else {
+                f.innerText = "Try adding the amounts again. ❌";
+                f.className = "feedback wrong";
+                playSound('wrong');
+            }
+        }
+
+        // 2. TIME LOGIC (FIXED: Hour mark positions)
+        function c3_time_generate(skip) {
+            if(!skip) prepNewScore(3);
+            let hr = Math.floor(Math.random() * 12) + 1; // 1 to 12
+            let min = Math.floor(Math.random() * 12) * 5; // 0, 5, 10, ... 55
+            let minStr = min < 10 ? `0${min}` : `${min}`;
+            c3_time_ans = `${hr}:${minStr}`;
+
+            document.getElementById('c3-time-input').value = '';
+            document.getElementById('c3-time-feedback').innerText = '';
+            document.getElementById('c3-time-story').innerText = "Look at the clock and tell the time (HH:MM).";
+
+            // Calculate rotations
+            let minDeg = min * 6; // 360 degrees / 60 minutes
+            let hrDeg = (hr * 30) + (min * 0.5); // 360 degrees / 12 hours + minute offset
+
+            // Apply rotations
+            document.getElementById('c3-minute-hand').style.transform = `translate(-50%, 0) rotate(${minDeg}deg)`;
+            document.getElementById('c3-hour-hand').style.transform = `translate(-50%, 0) rotate(${hrDeg}deg)`;
+            
+            // Draw hour numbers (FIXED LOGIC)
+            const clockFace = document.getElementById('c3-clock-face');
+            
+            // Remove existing marks before drawing new ones
+            clockFace.querySelectorAll('.hour-mark').forEach(el => el.remove());
+            
+            // Clock dimensions
+            const clockSize = 180; // from CSS width/height
+            const center = clockSize / 2; // 90
+            const radius = 75; // Adjusted radius (less than 90) to place numbers inside the border
+            
+            for(let h=1; h<=12; h++) {
+                const mark = document.createElement('div');
+                mark.className = 'hour-mark';
+                mark.innerText = h;
+                
+                // Angle: 30 degrees per hour. Subtract 90 to start '12' at the top (0 degrees).
+                const angle = (h * 30) - 90;
+                
+                // Convert angle to radians for Math.sin/cos
+                const angleRad = angle * Math.PI / 180;
+                
+                // Calculate position relative to the center (90, 90)
+                const x = center + radius * Math.cos(angleRad);
+                const y = center + radius * Math.sin(angleRad);
+                
+                // Set position using calculated pixel coordinates
+                // CSS transform: translate(-50%, -50%) centers the mark div on the calculated (x, y) point
+                mark.style.left = `${x}px`;
+                mark.style.top = `${y}px`;
+                
+                clockFace.appendChild(mark);
+            }
+        }
+
+        function c3_time_check() {
+            let u = document.getElementById('c3-time-input').value.trim();
+            let f = document.getElementById('c3-time-feedback');
+            
+            // Normalize input for comparison (e.g., 05:00 vs 5:00)
+            let uParts = u.split(':').map(p => parseInt(p.trim()));
+            let aParts = c3_time_ans.split(':').map(p => parseInt(p.trim()));
+            
+            if (uParts.length === 2 && uParts[0] === aParts[0] && uParts[1] === aParts[1]) {
+                f.innerText = `Correct! It's ${c3_time_ans}. ⏰`;
+                f.className = "feedback correct";
+                playSound('correct'); scoreWin(3);
+            } else {
+                f.innerText = `Wrong format or time. Use HH:MM, e.g., ${c3_time_ans}. ❌`;
+                f.className = "feedback wrong";
+                playSound('wrong');
+            }
+        }
+
+        // 3. WEIGHT LOGIC (FIXED: Item display)
+        function c3_weight_generate(skip) {
+            if(!skip) prepNewScore(3);
+            const weights = [1, 2, 5, 10]; // Available weights
+            let totalWeight = Math.floor(Math.random() * 10) + 5; // Total weight of left items (5kg to 14kg)
+            let numItems = 2; // Fixed to 2 items
+            let itemsHTML = '';
+            
+            // Generate items that total totalWeight
+            let leftOver = totalWeight;
+            let w1 = Math.min(leftOver - 1, Math.floor(Math.random() * (leftOver - 1)) + 1);
+            let w2 = leftOver - w1;
+            
+            itemsHTML = `
+                <div class="pan-content">
+                    <span class="pan-item" title="${w1}kg">📦</span>
+                    <span style="font-size:0.8rem">${w1}kg</span>
+                </div>
+                <div class="pan-content">
+                    <span class="pan-item" title="${w2}kg">📦</span>
+                    <span style="font-size:0.8rem">${w2}kg</span>
+                </div>
+            `;
+            
+            c3_weight_ans = totalWeight;
+            
+            document.getElementById('c3-weight-input').value = '';
+            document.getElementById('c3-weight-feedback').innerText = '';
+            document.getElementById('c3-pan-left').innerHTML = itemsHTML;
+            document.getElementById('c3-pan-right').innerHTML = `<div class="pan-content"><span style="color:#777;">?</span><span style="font-size:0.8rem; color:#777;">? kg</span></div>`;
+            document.getElementById('c3-beam').style.transform = 'translate(-50%, 0) rotate(-5deg)'; // Tilt left
+            document.getElementById('c3-weight-story').innerText = `Total weight on the left pan is ${totalWeight}kg. What single weight is needed on the right to BALANCE?`;
+        }
+        
+        function c3_weight_check() {
+            let u = parseInt(document.getElementById('c3-weight-input').value);
+            let f = document.getElementById('c3-weight-feedback');
+            
+            if (u === c3_weight_ans) {
+                f.innerText = `Correct! ${c3_weight_ans}kg balances the scale! ⚖️`;
+                f.className = "feedback correct";
+                playSound('correct'); scoreWin(3);
+                document.getElementById('c3-pan-right').innerHTML = `<div class="pan-content"><span class="pan-item" title="${u}kg">⚖️</span><span style="font-size:0.8rem">${u}kg</span></div>`;
+                document.getElementById('c3-beam').style.transform = 'translate(-50%, 0) rotate(0deg)';
+            } else {
+                f.innerText = "Try a different weight. The scale is still uneven. ❌";
+                f.className = "feedback wrong";
+                playSound('wrong');
+                document.getElementById('c3-pan-right').innerHTML = `<div class="pan-content"><span class="pan-item" title="${u}kg">⚖️</span><span style="font-size:0.8rem">${u}kg</span></div>`;
+                // Show tilt based on user guess
+                let tilt = u < c3_weight_ans ? 'translate(-50%, 0) rotate(-5deg)' : 'translate(-50%, 0) rotate(5deg)';
+                document.getElementById('c3-beam').style.transform = tilt;
+            }
+        }
+        
+        // 4. LENGTH LOGIC (FIXED: All labels visible)
+        function c3_length_generate(skip) {
+            if(!skip) prepNewScore(3);
+            const ruler = document.getElementById('c3-ruler-stage');
+            const item = document.getElementById('c3-ruler-item');
+            
+            // Clear ruler first time
+            if(!ruler.querySelectorAll('.ruler-tick').length) {
+                for(let i=0; i<=20; i++) {
+                    let tick = document.createElement('div');
+                    tick.className = 'ruler-tick';
+                    tick.style.left = (i * 5) + '%';
+                    tick.style.height = (i % 5 === 0) ? '20px' : '10px';
+                    ruler.appendChild(tick);
+                    
+                    // Display ALL labels from 0 to 20
+                    let label = document.createElement('div');
+                    label.className = 'ruler-label';
+                    label.innerText = i;
+                    label.style.left = `calc(${i * 5}% - 5px)`;
+                    ruler.appendChild(label);
+                }
+            }
+
+            // Generate a random length (1 to 15 cm)
+            let lengthCm = Math.floor(Math.random() * 15) + 1;
+            // Generate a random start position (0 to 5 cm)
+            let startCm = Math.floor(Math.random() * 5); 
+            
+            c3_length_ans = lengthCm;
+            
+            // Scale to percentage for visual: max ruler is 20cm
+            let startPercent = (startCm / 20) * 100;
+            let widthPercent = (lengthCm / 20) * 100;
+
+            item.style.left = startPercent + '%';
+            item.style.width = widthPercent + '%';
+            
+            document.getElementById('c3-length-input').value = '';
+            document.getElementById('c3-length-feedback').innerText = '';
+            document.getElementById('c3-length-story').innerText = `The red block starts at ${startCm}cm. What is its length (cm)?`;
+        }
+
+        function c3_length_check() {
+            let u = parseInt(document.getElementById('c3-length-input').value);
+            let f = document.getElementById('c3-length-feedback');
+            
+            if (u === c3_length_ans) {
+                f.innerText = `Correct! The length is ${c3_length_ans}cm. 📏`;
+                f.className = "feedback correct";
+                playSound('correct'); scoreWin(3);
+            } else {
+                f.innerText = "Measure again! Check the starting and ending points. ❌";
+                f.className = "feedback wrong";
+                playSound('wrong');
+            }
+        }
+
+        /* --- C5: SHAPES & FRACTIONS (UPDATED) --- */ 
         let c5_curr=''; 
+        let c5_mode='explore';
+        let c5_frac_mode='add', c5_frac_num_ans=0, c5_frac_den_ans=0;
+        
+        function c5_switchMode(mode) {
+            c5_mode = mode;
+            document.getElementById('c5-mode-explore').style.display = (mode === 'explore') ? 'block' : 'none';
+            document.getElementById('c5-mode-frac').style.display = (mode === 'frac') ? 'block' : 'none';
+            document.getElementById('btn-c5-explore').classList.toggle('active', mode === 'explore');
+            document.getElementById('btn-c5-frac').classList.toggle('active', mode === 'frac');
+
+            if(mode === 'frac') c5_frac_setMode('add');
+        }
+
+        // 1. SHAPE EXPLORER LOGIC (Kept same)
         function c5_show(s){ 
             c5_curr=s; 
             const st=document.getElementById('c5-shape-area'), inf=document.getElementById('c5-info'); 
@@ -844,7 +1445,284 @@
                 } 
             } 
         }
-        /* C6 */ function c6_switchMode(m){ document.getElementById('c6-mode-walker').style.display=m==='line'?'block':'none'; document.getElementById('c6-mode-graph').style.display=m==='graph'?'block':'none'; document.getElementById('btn-c6-line').classList.toggle('active',m==='line'); document.getElementById('btn-c6-graph').classList.toggle('active',m==='graph'); if(m==='line')c6_drawWalkerTicks(); if(m==='graph'){c6_drawGridLabels();if(scores[6].t===0)c6_newGraphProblem();} } function c6_move(){let v=parseInt(document.getElementById('c6-input').value);if(v>10)v=10;if(v<-10)v=-10;document.getElementById('c6-walker').style.left=(50+(v*4))+"%";} function c6_drawWalkerTicks(){ const track=document.getElementById('c6-walker-track'); if(track.querySelector('.walker-tick'))return; for(let i=-10;i<=10;i++){ let tick=document.createElement('div');tick.className='walker-tick';tick.style.left=(50+(i*4))+'%'; let num=document.createElement('div');num.className='walker-num';num.innerText=i;num.style.left=(50+(i*4))+'%'; if(i%5!==0 && i!==0)num.style.display='none'; track.appendChild(tick);track.appendChild(num); } } let c6_tx=0,c6_ty=0; function c6_drawGridLabels(){ const b=document.getElementById('c6-board'); if(b.querySelector('.scale-label'))return; for(let i=-10;i<=10;i++){ if(i===0)continue; if(i%2!==0)continue; let x=document.createElement('div');x.className='scale-label';x.innerText=i;x.style.left=(200+(i*20)-5)+'px';x.style.top='205px';b.appendChild(x); let y=document.createElement('div');y.className='scale-label';y.innerText=i;y.style.left='180px';y.style.top=(200-(i*20)-8)+'px';b.appendChild(y); } let o=document.createElement('div');o.className='scale-label';o.innerText='0';o.style.left='185px';o.style.top='205px';b.appendChild(o); } function c6_newGraphProblem(skip){ if(!skip) prepNewScore(6); c6_tx=Math.floor(Math.random()*19)-9; c6_ty=Math.floor(Math.random()*19)-9; document.getElementById('c6-graph-instruction').innerText=`Tap Grid at (${c6_tx}, ${c6_ty})`; document.getElementById('c6-plot-dot').style.display='none'; document.getElementById('c6-graph-feedback').innerText=''; } function c6_plotClick(e){ const b=e.currentTarget, r=b.getBoundingClientRect(); let gx=Math.round((e.clientX-r.left-200)/20), gy=Math.round(-(e.clientY-r.top-200)/20); const d=document.getElementById('c6-plot-dot'); d.style.display='block';d.style.left=(200+(gx*20))+'px';d.style.top=(200-(gy*20))+'px'; const f=document.getElementById('c6-graph-feedback'); if(gx===c6_tx && gy===c6_ty){ f.innerText="Correct! 🎉";f.className="feedback correct"; playSound('correct'); scoreWin(6); }else{ f.innerText=`You clicked (${gx}, ${gy}). Try again.`;f.className="feedback wrong"; playSound('wrong'); } }
+
+        // --- NEW HELPER FUNCTION: Get Random Fraction Scenario ---
+        function getScenario(mode) {
+            let n1, d1, n2, d2, rule, scenarioText;
+            // Case 0: Same Denominator (Add/Sub) or Same Denominator (Mult)
+            // Case 1: Same Numerator, Different Denominator (Add/Sub) or Whole Number (Mult)
+            // Case 2: Different Numerator, Different Denominator (Add/Sub/Mult)
+            const caseType = Math.floor(Math.random() * 3);
+
+            if (mode === 'add' || mode === 'sub') {
+                if (caseType === 0) { // Same Denominator (Easy)
+                    d1 = d2 = Math.floor(Math.random() * 3) + 3; // 3 to 5
+                    n1 = Math.floor(Math.random() * (d1 - 1)) + 1;
+                    n2 = Math.floor(Math.random() * (d2 - 1)) + 1;
+                    if (mode === 'sub' && n1 < n2) [n1, n2] = [n2, n1];
+                    rule = "Rule: Keep the denominator, add/subtract the numerators.";
+                    scenarioText = "Scenario: Same Denominator (Easy)";
+                } else if (caseType === 1) { // Same Numerator, Different Denominator (Intermediate)
+                    n1 = n2 = Math.floor(Math.random() * 2) + 1; // 1 or 2
+                    d1 = Math.floor(Math.random() * 3) + 3; // 3 to 5
+                    do { d2 = Math.floor(Math.random() * 3) + 3; } while (d2 === d1);
+                    rule = "Rule: Find the Least Common Multiple (LCM) for the denominators, convert the fractions, then add/subtract numerators.";
+                    scenarioText = "Scenario: Same Numerator, Different Denominator";
+                } else { // Different Numerator, Different Denominator (Harder)
+                    d1 = Math.floor(Math.random() * 3) + 3;
+                    do { d2 = Math.floor(Math.random() * 3) + 3; } while (d2 === d1);
+                    n1 = Math.floor(Math.random() * (d1 - 1)) + 1;
+                    n2 = Math.floor(Math.random() * (d2 - 1)) + 1;
+                    rule = "Rule: Find the Least Common Multiple (LCM) for the denominators, convert the fractions, then add/subtract numerators.";
+                    scenarioText = "Scenario: Different Numerator & Denominator";
+                }
+            } else if (mode === 'mult') {
+                if (caseType === 0) { // Same Denominator (Standard)
+                    d1 = d2 = Math.floor(Math.random() * 3) + 3; // 3 to 5
+                    n1 = Math.floor(Math.random() * (d1 - 1)) + 1;
+                    n2 = Math.floor(Math.random() * (d2 - 1)) + 1;
+                    rule = "Rule: Multiply numerator by numerator, and denominator by denominator.";
+                    scenarioText = "Scenario: Multiplying Same Denominators";
+                } else if (caseType === 1) { // Fraction by Whole Number
+                    d1 = Math.floor(Math.random() * 3) + 3;
+                    n1 = Math.floor(Math.random() * (d1 - 1)) + 1;
+                    n2 = Math.floor(Math.random() * 3) + 2; // Whole number (2 to 4)
+                    d2 = 1; // Representing as n2/1
+                    rule = "Rule: Multiply the numerator by the whole number. Keep the denominator.";
+                    scenarioText = "Scenario: Multiplying a Fraction by a Whole Number";
+                } else { // Different Denominators
+                    d1 = Math.floor(Math.random() * 3) + 3;
+                    do { d2 = Math.floor(Math.random() * 3) + 3; } while (d2 === d1);
+                    n1 = Math.floor(Math.random() * (d1 - 1)) + 1;
+                    n2 = Math.floor(Math.random() * (d2 - 1)) + 1;
+                    rule = "Rule: Multiply numerator by numerator, and denominator by denominator.";
+                    scenarioText = "Scenario: Multiplying Different Denominators";
+                }
+            }
+
+            return { n1, d1, n2, d2, rule, scenarioText };
+        }
+
+        // 2. FRACTION QUIZ LOGIC (NEW)
+        function c5_frac_setMode(mode) {
+            c5_frac_mode = mode;
+            ['add', 'sub', 'mult'].forEach(m => {
+                document.getElementById(`btn-c5-f-${m}`).classList.toggle('active', m === mode);
+            });
+            c5_frac_generate();
+        }
+
+        function c5_frac_generate(skip) {
+            if(!skip) prepNewScore(5); // Use C5 score
+            document.getElementById('c5-frac-num').value = '';
+            document.getElementById('c5-frac-den').value = '';
+            document.getElementById('c5-frac-feedback').innerText = '';
+            document.getElementById('c5-frac-feedback').className = 'feedback';
+            
+            const data = getScenario(c5_frac_mode);
+            let n1 = data.n1, d1 = data.d1;
+            let n2 = data.n2, d2 = data.d2;
+            
+            let html = '';
+            let question = '';
+            let finalNum, finalDen;
+            let opSymbol = c5_frac_mode === 'add' ? '+' : c5_frac_mode === 'sub' ? '-' : '×';
+            
+            // Greatest Common Divisor helper function
+            const gcd = (a, b) => (b === 0) ? a : gcd(b, a % b);
+
+            if (c5_frac_mode === 'add' || c5_frac_mode === 'sub') {
+                if (d1 === d2) {
+                    finalDen = d1;
+                    finalNum = c5_frac_mode === 'add' ? n1 + n2 : n1 - n2;
+                } else {
+                    // Find LCM for different denominators (d1, d2)
+                    let max = Math.max(d1, d2);
+                    let lcm = max;
+                    while (lcm % d1 !== 0 || lcm % d2 !== 0) { lcm += max; }
+                    
+                    let newN1 = n1 * (lcm / d1);
+                    let newN2 = n2 * (lcm / d2);
+                    
+                    finalDen = lcm;
+                    finalNum = c5_frac_mode === 'add' ? newN1 + newN2 : newN1 - newN2;
+                }
+
+                // If multiplying by a whole number, only the first term has a visualization
+                if(data.d2 === 1 && c5_frac_mode !== 'mult') { // Should not happen with the new getScenario for add/sub
+                    html = `${renderFraction(n1, d1, false)} <span style="font-size:3rem;">${opSymbol}</span> ${n2} <span style="font-size:3rem;">=</span> ?`;
+                    question = `${data.scenarioText}: ${n1}/${d1} ${opSymbol} ${n2}`;
+                } else {
+                    html = `${renderFraction(n1, d1, false)} <span style="font-size:3rem;">${opSymbol}</span> ${renderFraction(n2, d2, false)} <span style="font-size:3rem;">=</span> ?`;
+                    question = `${data.scenarioText}: ${n1}/${d1} ${opSymbol} ${n2}/${d2}`;
+                }
+            } else if (c5_frac_mode === 'mult') {
+                // n1/d1 * n2/d2
+                finalNum = n1 * n2;
+                finalDen = d1 * d2;
+
+                // Handle Whole Number Multiplication (n2/d2 is n2/1)
+                if (d2 === 1) {
+                    html = `${renderFraction(n1, d1, true)} <span style="font-size:3rem;">${opSymbol}</span> ${n2} <span style="font-size:3rem;">=</span> ?`;
+                    question = `${data.scenarioText}: ${n1}/${d1} ${opSymbol} ${n2}`;
+                } else {
+                    html = `${renderFraction(n1, d1, true)} <span style="font-size:3rem;">${opSymbol}</span> ${renderFraction(n2, d2, true)} <span style="font-size:3rem;">=</span> ?`;
+                    question = `${data.scenarioText}: ${n1}/${d1} ${opSymbol} ${n2}/${d2}`;
+                }
+            }
+
+            // Simplify final answer (GCD)
+            const common = gcd(finalNum, finalDen);
+            c5_frac_num_ans = finalNum / common;
+            c5_frac_den_ans = finalDen / common;
+            
+            document.getElementById('c5-frac-story').innerHTML = `<span style="font-weight:bold;">${data.rule}</span><br>${question}`;
+            document.getElementById('c5-frac-stage').innerHTML = html;
+        }
+
+        function renderFraction(num, den, isMult) {
+            // Visual using SVG pie charts for Add/Sub (Must handle different denominators)
+            if (!isMult && c5_frac_mode !== 'mult') {
+                 // Use SVG for more accurate different denominator visuals
+                let html = `<div class="frac-circle">`;
+                const angleStep = 360 / den;
+                
+                // SVG Pie Chart
+                html = `<svg width="120" height="120" style="margin-top:20px;">
+                    <circle cx="60" cy="60" r="50" stroke="var(--dark)" stroke-width="2" fill="white" />
+                `;
+                let currentAngle = -90; // Start at top
+                for(let i=0; i<num; i++) {
+                    let startAngle = currentAngle;
+                    let endAngle = currentAngle + angleStep;
+                    
+                    // Simple path for a slice
+                    let x1 = 60 + 50 * Math.cos(startAngle * Math.PI / 180);
+                    let y1 = 60 + 50 * Math.sin(startAngle * Math.PI / 180);
+                    let x2 = 60 + 50 * Math.cos(endAngle * Math.PI / 180);
+                    let y2 = 60 + 50 * Math.sin(endAngle * Math.PI / 180);
+                    let largeArcFlag = angleStep > 180 ? 1 : 0;
+
+                    html += `<path d="M 60 60 L ${x1} ${y1} A 50 50 0 ${largeArcFlag} 1 ${x2} ${y2} Z" fill="var(--secondary)" opacity="0.7"/>`;
+                    
+                    currentAngle = endAngle;
+                }
+                // Redraw outline
+                html += `<circle cx="60" cy="60" r="50" stroke="var(--dark)" stroke-width="2" fill="none" />`;
+                html += `</svg>`;
+                
+                // Text representation below the circle for clarity
+                html += `<div style="font-size:1.2rem; margin-top:5px;">${num}/${den}</div>`;
+                return html;
+            }
+            
+            // Text representation for Multiplication (avoid complex visual update)
+            // Use this structure for text fraction representation
+            return `<div class="frac-num" style="display:inline-block; text-align:center;">
+                <div style="font-size:1.5rem;">${num}</div>
+                <div class="frac-bar" style="width:25px; margin:0 auto;"></div>
+                <div style="font-size:1.5rem;">${den}</div>
+            </div>`;
+        }
+
+        function c5_frac_check() {
+            let uNum = parseInt(document.getElementById('c5-frac-num').value);
+            let uDen = parseInt(document.getElementById('c5-frac-den').value);
+            let f = document.getElementById('c5-frac-feedback');
+            
+            if (isNaN(uNum) || isNaN(uDen) || uDen === 0) {
+                f.innerText = "Please enter valid numbers for numerator and denominator. ❌";
+                f.className = "feedback wrong";
+                playSound('wrong');
+                return;
+            }
+
+            // Greatest Common Divisor helper function (local scope repeat for safety)
+            const gcd = (a, b) => (b === 0) ? a : gcd(b, a % b);
+
+            // Simplify user input
+            const commonUser = gcd(uNum, uDen);
+            const userNumSimple = uNum / commonUser;
+            const userDenSimple = uDen / commonUser;
+            
+            if (userNumSimple === c5_frac_num_ans && userDenSimple === c5_frac_den_ans) {
+                if (uNum === c5_frac_num_ans && uDen === c5_frac_den_ans) {
+                    f.innerText = `Correct! The answer is ${c5_frac_num_ans}/${c5_frac_den_ans}. 🎉`;
+                } else {
+                    f.innerText = `Correct Value! The simplified answer is ${c5_frac_num_ans}/${c5_frac_den_ans}. 🎉`;
+                }
+                f.className = "feedback correct";
+                playSound('correct'); scoreWin(5);
+            } else {
+                f.innerText = "Incorrect answer. Check your calculation or simplification. ❌";
+                f.className = "feedback wrong";
+                playSound('wrong');
+            }
+        }
+
+        /* C6 */ 
+        function c6_switchMode(m){ 
+            document.getElementById('c6-mode-walker').style.display=m==='line'?'block':'none'; 
+            document.getElementById('c6-mode-graph').style.display=m==='graph'?'block':'none'; 
+            document.getElementById('btn-c6-line').classList.toggle('active',m==='line'); 
+            document.getElementById('btn-c6-graph').classList.toggle('active',m==='graph'); 
+            if(m==='line')c6_drawWalkerTicks(); 
+            if(m==='graph'){c6_drawGridLabels();if(scores[6].t===0)c6_newGraphProblem();} 
+        } 
+        
+        function c6_move(){
+            let v=parseInt(document.getElementById('c6-input').value);
+            if(isNaN(v)) return; // Prevents error if input is empty
+            if(v>10)v=10;if(v<-10)v=-10;
+            // The logic for the man icon
+            document.getElementById('c6-walker-man').style.left=(50+(v*4))+"%";
+        } 
+        
+        function c6_drawWalkerTicks(){ 
+            const track=document.getElementById('c6-walker-track'); 
+            if(track.querySelector('.walker-tick'))return; 
+            for(let i=-10;i<=10;i++){ 
+                let tick=document.createElement('div');tick.className='walker-tick';tick.style.left=(50+(i*4))+'%'; 
+                let num=document.createElement('div');num.className='walker-num';num.innerText=i;num.style.left=(50+(i*4))+'%'; 
+                if(i%5!==0 && i!==0)num.style.display='none'; 
+                track.appendChild(tick);track.appendChild(num); 
+            } 
+        } 
+        let c6_tx=0,c6_ty=0; 
+        function c6_drawGridLabels(){ 
+            const b=document.getElementById('c6-board'); 
+            if(b.querySelector('.scale-label'))return; 
+            for(let i=-10;i<=10;i++){ 
+                if(i===0)continue; 
+                if(i%2!==0)continue; 
+                let x=document.createElement('div');x.className='scale-label';x.innerText=i;x.style.left=(200+(i*20)-5)+'px';x.style.top='205px';b.appendChild(x); 
+                let y=document.createElement('div');y.className='scale-label';y.innerText=i;y.style.left='180px';y.style.top=(200-(i*20)-8)+'px';b.appendChild(y); 
+            } 
+            let o=document.createElement('div');o.className='scale-label';o.innerText='0';o.style.left='185px';o.style.top='205px';b.appendChild(o); 
+        } 
+        function c6_newGraphProblem(skip){ 
+            if(!skip) prepNewScore(6); 
+            c6_tx=Math.floor(Math.random()*19)-9; 
+            c6_ty=Math.floor(Math.random()*19)-9; 
+            document.getElementById('c6-graph-instruction').innerText=`Tap Grid at (${c6_tx}, ${c6_ty})`; 
+            document.getElementById('c6-plot-dot').style.display='none'; 
+            document.getElementById('c6-graph-feedback').innerText=''; 
+        } 
+        function c6_plotClick(e){ 
+            const b=e.currentTarget, r=b.getBoundingClientRect(); 
+            let gx=Math.round((e.clientX-r.left-200)/20), gy=Math.round(-(e.clientY-r.top-200)/20); 
+            const d=document.getElementById('c6-plot-dot'); 
+            d.style.display='block';d.style.left=(200+(gx*20))+'px';d.style.top=(200-(gy*20))+'px'; 
+            const f=document.getElementById('c6-graph-feedback'); 
+            if(gx===c6_tx && gy===c6_ty){ 
+                f.innerText="Correct! 🎉";f.className="feedback correct"; 
+                playSound('correct'); scoreWin(6); 
+            }else{ 
+                f.innerText=`You clicked (${gx}, ${gy}). Try again.`;f.className="feedback wrong"; 
+                playSound('wrong'); 
+            } 
+        }
+        
         /* C7 */ 
         let c7_mode='circle'; const PX_CM=28; 
         function c7_setShapeMode(m){ c7_mode=m; ['circle','square','tri'].forEach(k=>document.getElementById(`btn-c7-${k}`).classList.remove('active')); document.getElementById(`btn-c7-${m}`).classList.add('active'); document.getElementById('c7-label').innerText=(m==='circle'?"Radius":"Side")+" (cm): "; document.getElementById('c7-stage').innerHTML='<span style="color:#aaa">Drawing area...</span>'; document.getElementById('c7-results').style.display='none'; } 
@@ -882,7 +1760,7 @@
                 // ADDED ANGLES FOR SQUARE
                 let angA=document.createElement('span');angA.className='a-label';angA.innerText='90°';angA.style.top='5px';angA.style.left='5px';
                 let angB=document.createElement('span');angB.className='a-label';angB.innerText='90°';angB.style.top='5px';angB.style.right='5px';
-                let angC=document.createElement('span');angC.className='a-label';angC.innerText='90°';angC.style.bottom='5px';angC.style.left='5px';
+                let angC=document.createElement('span');angA.className='a-label';angA.innerText='90°';angC.style.bottom='5px';angC.style.left='5px';
                 let angD=document.createElement('span');angD.className='a-label';angD.innerText='90°';angD.style.bottom='5px';angD.style.right='5px';
 
                 el.appendChild(lTop); 
