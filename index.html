@@ -459,7 +459,7 @@
         <div id="app-interface">
             <div style="margin-bottom: 20px;"><h1 style="color: var(--dark);">🎓 Smart Math World</h1><p>Interactive Syllabus for KG - Class 8</p></div>
             <nav class="app-nav">
-                <button class="app-btn active" onclick="switchModule(0)">KG</button><button class="app-btn" onclick="switchModule(1)">Class 1</button><button class="app-btn" onclick="switchModule(2)">Class 2</button><button class="app-btn" onclick="switchModule(3)">Class 3</button><button class="app-btn" onclick="switchModule(5)">Class 5</button><button class="app-btn" onclick="switchModule(6)">Class 6</button><button class="app-btn" onclick="switchModule(7)">Class 7</button><button class="app-btn" onclick="switchModule(8)">Class 8</button>
+                <button class="app-btn active" onclick="switchModule(0)">KG</button><button class="app-btn" onclick="switchModule(1)">Class 1</button><button class="app-btn" onclick="switchModule(2)">Class 2</button><button class="app-btn" onclick="switchModule(3)">Class 3</button><button class="app-btn" onclick="switchModule(4)">Class 4</button><button class="app-btn" onclick="switchModule(5)">Class 5</button><button class="app-btn" onclick="switchModule(6)">Class 6</button><button class="app-btn" onclick="switchModule(7)">Class 7</button><button class="app-btn" onclick="switchModule(8)">Class 8</button>
             </nav>
             
             <div id="module-0" class="module-container active-module">
@@ -490,7 +490,7 @@
                 </div>
 
                 <div id="c0-mode-order" style="display:none;">
-                    <div id="c0-order-instruction" class="story-text" style="font-align: 1.4rem;">Arrange Small to Big ⬆️</div>
+                    <div id="c0-order-instruction" class="story-align: 1.4rem;">Arrange Small to Big ⬆️</div>
                     <div id="c0-order-container" class="order-container"></div>
                     <div id="c0-order-feedback" class="feedback"></div>
                     <div class="controls"><button class="btn-action btn-new" onclick="c0_generate_order()">New Order ➡️</button></div>
@@ -606,6 +606,49 @@
 
             </div>
             
+            <div id="module-4" class="module-container">
+                <div class="score-panel"><span class="score-text">📝 Test Score:</span><span class="score-val" id="score-4">0 / 0</span><button class="btn-reset" onclick="resetScore(4)">Start Test</button></div>
+                <h2 class="module-title">Class 4: Order of Operations (BODMAS)</h2>
+                
+                <div id="c4-explanation" style="text-align: left; max-width: 600px; margin: 0 auto 30px auto; background: #e0f7fa; padding: 20px; border-radius: 10px; border-left: 5px solid var(--secondary);">
+                    <h3>The BODMAS Rule 💡</h3>
+                    <p>When an equation has many different operations (like +, -, ×, ÷), we must follow a special order to get the correct answer. This order is called **BODMAS**.</p>
+                    <table style="width:100%; margin: 15px 0; border-collapse: collapse; text-align: center;">
+                        <tr style="background-color: var(--secondary); color: white;"><th>Letter</th><th>Meaning</th><th>What to Solve</th><th>Priority</th></tr>
+                        <tr><td>**B**</td><td>Brackets</td><td>() or []</td><td>Highest</td></tr>
+                        <tr><td>**O**</td><td>Orders</td><td>Powers or Roots (e.g., 2²)</td><td>High</td></tr>
+                        <tr style="background-color: #f0f4f8;"><td>**D**</td><td>Division</td><td>÷</td><td rowspan="2">Equal (Left to Right)</td></tr>
+                        <tr style="background-color: #f0f4f8;"><td>**M**</td><td>Multiplication</td><td>×</td></tr>
+                        <tr><td>**A**</td><td>Addition</td><td>+</td><td rowspan="2">Equal (Left to Right)</td></tr>
+                        <tr><td>**S**</td><td>Subtraction</td><td>-</td></tr>
+                    </table>
+                    <p style="font-style: italic;">**Remember:** Division & Multiplication have equal priority. Do whichever comes first from the **left to right**! Same for Addition & Subtraction.</p>
+                </div>
+
+                <div id="c4-quiz-area">
+                    <div id="c4-story" class="story-text" style="font-size: 1.4rem;">Solve the expression using the BODMAS rule.</div>
+                    <div class="equation" style="font-size: 2.2rem; background: #fff8e1; padding: 10px; border-radius: 8px;"><span id="c4-eq">?</span></div>
+                    
+                    <div id="c4-example-steps" style="display:none; text-align:left; max-width: 600px; margin: 20px auto; padding: 15px; border: 1px solid #ddd; border-radius: 10px;">
+                        <p style="font-weight: bold;">Step-by-Step Example:</p>
+                        <div id="c4-steps-content"></div>
+                    </div>
+
+                    <div class="controls">
+                        <label>Enter the final answer:</label>
+                        <input type="number" id="c4-input" class="game-input" placeholder="Answer">
+                        <button class="btn-action" onclick="c4_check()">Check</button>
+                        <button class="btn-action btn-new" onclick="c4_generate()">New Problem</button>
+                    </div>
+                    <div id="c4-feedback" class="feedback"></div>
+                </div>
+
+                <div class="controls" style="margin-top: 30px;">
+                    <button class="app-btn" onclick="c4_showExample()">Show Example</button>
+                    <button class="app-btn" onclick="c4_hideExample()">Hide Example</button>
+                </div>
+            </div>
+            
             <div id="module-5" class="module-container">
                 <h2 class="module-title">Class 5: Shapes & Fractions</h2>
                 <div class="controls">
@@ -677,10 +720,10 @@
                 <div id="c8-tab-poly" style="display:none;">
                     <div class="controls">
                         <button class="app-btn" id="btn-c8-p-quad" onclick="c8_setPolyMode(4)">Quadrilateral</button>
-                        <button class="app-btn" id="btn-c8-p-pent" onclick="c8_setPolyMode(5)">Pentagon</button>
-                        <button class="app-btn" id="btn-c8-p-hex" onclick="c8_setPolyMode(6)">Hexagon</button>
-                        <button class="app-btn" id="btn-c8-p-hept" onclick="c8_setPolyMode(7)">Heptagon</button>
-                        <button class="app-btn" id="btn-c8-p-oct" onclick="c8_setPolyMode(8)">Octagon</button>
+                        <button class="app-btn" id="btn-c8-p-pent" onclick="c8_switchModule(5)">Pentagon</button>
+                        <button class="app-btn" id="btn-c8-p-hex" onclick="c8_switchModule(6)">Hexagon</button>
+                        <button class="app-btn" id="btn-c8-p-hept" onclick="c8_switchModule(7)">Heptagon</button>
+                        <button class="app-btn" id="btn-c8-p-oct" onclick="c8_switchModule(8)">Octagon</button>
                     </div>
                     
                     <div class="poly-info-box" id="c8-poly-info">
@@ -822,15 +865,16 @@
         }
 
         /* --- GAME LOGIC --- */
-        let scores = { 0:{c:0,t:0,s:false}, 1:{c:0,t:0,s:false}, 2:{c:0,t:0,s:false}, 3:{c:0,t:0,s:false}, 5:{c:0,t:0,s:false}, 6:{c:0,t:0,s:false}, 8:{c:0,t:0,s:false} }; // ADDED SCORE FOR C5
+        let scores = { 0:{c:0,t:0,s:false}, 1:{c:0,t:0,s:false}, 2:{c:0,t:0,s:false}, 3:{c:0,t:0,s:false}, 4:{c:0,t:0,s:false}, 5:{c:0,t:0,s:false}, 6:{c:0,t:0,s:false}, 8:{c:0,t:0,s:false} }; // ADDED SCORE FOR C4
         function prepNewScore(modId) { if(scores[modId]) { scores[modId].s = false; scores[modId].t++; updateScoreUI(modId); } }
         function scoreWin(modId) { if(scores[modId] && !scores[modId].s) { scores[modId].c++; scores[modId].s = true; updateScoreUI(modId); } }
         function resetScore(modId) { 
             if(scores[modId]) { scores[modId].c = 0; scores[modId].t = 1; scores[modId].s = false; updateScoreUI(modId); 
             if(modId===0) { if(c0_mode==='count') c0_generate(true); else if(c0_mode==='ba') c0_generate_ba(true); else c0_generate_order(true); }
             if(modId===1) c1_generate(true); 
-            if(modId===2) { if(c2_mode==='mult') c2_generate(true); else c2_div_generate(true); } // UPDATED FOR C2
+            if(modId===2) { if(c2_mode==='mult') c2_generate(true); else c2_div_generate(true); } 
             if(modId===3) c3_generate(true); // C3 Will handle its own mode reset
+            if(modId===4) c4_generate(true); // ADDED FOR C4
             if(modId===5) c5_frac_generate(true); // C5 Fraction reset
             if(modId===6) c6_newGraphProblem(true); 
             if(modId===8) { 
@@ -847,9 +891,10 @@
             
             if(id===0) { c0_switchMode('count'); }
             if(id===1 && scores[1].t===0) c1_generate(); 
-            if(id===2) { c2_setMode('mult'); if(scores[2].t===0) c2_generate(); } // UPDATED FOR C2
-            if(id===3) { c3_switchMode('currency'); if(scores[3].t===0) c3_currency_generate(); } // UPDATED FOR C3
-            if(id===5) { c5_switchMode('explore'); if(scores[5].t===0) c5_frac_generate(); } // UPDATED FOR C5
+            if(id===2) { c2_setMode('mult'); if(scores[2].t===0) c2_generate(); } 
+            if(id===3) { c3_switchMode('currency'); if(scores[3].t===0) c3_currency_generate(); }
+            if(id===4) { if(scores[4].t===0) c4_generate(); } // ADDED FOR C4
+            if(id===5) { c5_switchMode('explore'); if(scores[5].t===0) c5_frac_generate(); }
             if(id===6) { c6_switchMode('line'); if(scores[6].t===0) c6_newGraphProblem(); } 
             if(id===7) c7_setShapeMode('circle'); 
             if(id===8 && scores[8].t===0) c8_setAlgMode('taxi'); 
@@ -1384,7 +1429,164 @@
             }
         }
 
-        /* --- C5: SHAPES & FRACTIONS (UPDATED) --- */ 
+        /* --- C4: BODMAS (NEW) --- */
+        let c4_ans = 0;
+        let c4_current_eq = '';
+
+        // Helper: Generates a random integer
+        function randomInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+
+        // Helper: Solves the equation using JS's eval (safe for simple math and integers)
+        function safeEval(expression) {
+            try {
+                // Ensure only basic arithmetic and allowed functions are used
+                let result = Function('return ' + expression)();
+                return Math.round(result); // Round to avoid float issues in simple quizzes
+            } catch (e) {
+                console.error("Evaluation error:", e);
+                return NaN;
+            }
+        }
+
+        // Generates a random BODMAS expression
+        function c4_generateExpression() {
+            let n1 = randomInt(5, 15);
+            let n2 = randomInt(2, 6);
+            let n3 = randomInt(1, 4);
+            let n4 = randomInt(1, 8);
+            let n5 = randomInt(1, 3);
+            
+            // Randomly select one of a few templates for varied difficulty
+            let template = randomInt(1, 4);
+            let eq, step1, step2, step3, step4;
+            
+            switch(template) {
+                case 1: // D, M, A, S (No Brackets/Orders)
+                    // e.g., n1 + n2 * n3 - n4 / n5
+                    n1 = randomInt(10, 20); n2 = randomInt(2, 5); n3 = randomInt(2, 4); n4 = randomInt(10, 30); n5 = randomInt(2, 5);
+                    let divAns = n4 / n5; 
+                    if (!Number.isInteger(divAns)) return c4_generateExpression(); // Only integer results
+                    
+                    eq = `${n1} + ${n2} × ${n3} - ${n4} ÷ ${n5}`;
+                    step1 = `(M) ${n2} × ${n3} = ${n2 * n3}`;
+                    let afterM = `${n1} + ${n2 * n3} - ${n4} ÷ ${n5}`;
+                    step2 = `(D) ${n4} ÷ ${n5} = ${divAns}`;
+                    let afterD = `${n1} + ${n2 * n3} - ${divAns}`;
+                    step3 = `(A) ${n1} + ${n2 * n3} = ${n1 + (n2 * n3)}`;
+                    let afterA = `${n1 + (n2 * n3)} - ${divAns}`;
+                    step4 = `(S) ${n1 + (n2 * n3)} - ${divAns} = ${safeEval(afterA)}`;
+                    break;
+
+                case 2: // B, M, A (Brackets + Multiplication/Addition)
+                    // e.g., n1 × (n2 + n3) + n4
+                    eq = `${n1} × (${n2} + ${n3}) + ${n4}`;
+                    step1 = `(B) ${n2} + ${n3} = ${n2 + n3}`;
+                    let afterB = `${n1} × ${n2 + n3} + ${n4}`;
+                    step2 = `(M) ${n1} × ${n2 + n3} = ${n1 * (n2 + n3)}`;
+                    let afterM2 = `${n1 * (n2 + n3)} + ${n4}`;
+                    step3 = `(A) ${n1 * (n2 + n3)} + ${n4} = ${safeEval(afterM2)}`;
+                    step4 = "Final Answer";
+                    break;
+
+                case 3: // B, D, A (Brackets + Division/Addition)
+                    // e.g., n1 + (n2 ÷ n3) - n4
+                    let tempDiv = n2 / n3;
+                    if (!Number.isInteger(tempDiv) || n2 < 10) return c4_generateExpression(); // Ensure easy division
+                    
+                    eq = `${n1} + (${n2} ÷ ${n3}) - ${n4}`;
+                    step1 = `(B) ${n2} ÷ ${n3} = ${tempDiv}`;
+                    let afterB3 = `${n1} + ${tempDiv} - ${n4}`;
+                    step2 = `(A) ${n1} + ${tempDiv} = ${n1 + tempDiv}`;
+                    let afterA3 = `${n1 + tempDiv} - ${n4}`;
+                    step3 = `(S) ${n1 + tempDiv} - ${n4} = ${safeEval(afterA3)}`;
+                    step4 = "Final Answer";
+                    break;
+                    
+                case 4: // M, D (Left-to-Right Priority)
+                    // e.g., n1 * n2 / n3 + n4
+                    n1 = randomInt(5, 10); n2 = randomInt(2, 4); n3 = randomInt(2, 4); n4 = randomInt(5, 10);
+                    let multAns = n1 * n2;
+                    let divAns4 = multAns / n3;
+                    if (!Number.isInteger(divAns4)) return c4_generateExpression(); // Only integer results
+
+                    eq = `${n1} × ${n2} ÷ ${n3} + ${n4}`;
+                    step1 = `(M/D - Left) ${n1} × ${n2} = ${multAns}`;
+                    let afterMD1 = `${multAns} ÷ ${n3} + ${n4}`;
+                    step2 = `(D/M - Right) ${multAns} ÷ ${n3} = ${divAns4}`;
+                    let afterMD2 = `${divAns4} + ${n4}`;
+                    step3 = `(A) ${divAns4} + ${n4} = ${safeEval(afterMD2)}`;
+                    step4 = "Final Answer";
+                    break;
+
+                default:
+                    return c4_generateExpression();
+            }
+            
+            // Format for display
+            c4_current_eq = eq.replace(/×/g, '*').replace(/÷/g, '/'); // Convert to JS format
+            const finalAns = safeEval(c4_current_eq);
+            
+            return {
+                eq: eq,
+                ans: finalAns,
+                steps: [step1, step2, step3, step4]
+            };
+        }
+
+        // Generate a new BODMAS problem
+        function c4_generate(skip) {
+            if(!skip) prepNewScore(4);
+            
+            // Clear previous results
+            document.getElementById('c4-input').value = '';
+            document.getElementById('c4-feedback').innerText = '';
+            document.getElementById('c4-feedback').className = 'feedback';
+            document.getElementById('c4-example-steps').style.display = 'none';
+
+            let problem = c4_generateExpression();
+            c4_ans = problem.ans;
+            document.getElementById('c4-eq').innerText = problem.eq;
+            
+            // Populate the example steps
+            let stepsHTML = '';
+            problem.steps.forEach((step, index) => {
+                if (step !== "Final Answer") {
+                    stepsHTML += `<p style="margin-bottom: 5px;">${index + 1}. ${step}</p>`;
+                }
+            });
+            document.getElementById('c4-steps-content').innerHTML = stepsHTML;
+        }
+
+        // Check the user's answer
+        function c4_check() {
+            let u = parseInt(document.getElementById('c4-input').value);
+            let f = document.getElementById('c4-feedback');
+            
+            if (u === c4_ans) {
+                f.innerText = `Correct! The answer is ${c4_ans}. 🎉`;
+                f.className = "feedback correct";
+                playSound('correct'); scoreWin(4);
+            } else {
+                f.innerText = "Incorrect. Remember BODMAS! Try again. ❌";
+                f.className = "feedback wrong";
+                playSound('wrong');
+            }
+        }
+        
+        // Example display functions
+        function c4_showExample() {
+            document.getElementById('c4-example-steps').style.display = 'block';
+            document.getElementById('c4-feedback').innerText = "Look at the steps for the current problem!";
+            document.getElementById('c4-feedback').className = 'feedback';
+        }
+
+        function c4_hideExample() {
+            document.getElementById('c4-example-steps').style.display = 'none';
+            document.getElementById('c4-feedback').innerText = "";
+            document.getElementById('c4-feedback').className = 'feedback';
+        }
+
+        /* C5 */ 
         let c5_curr=''; 
         let c5_mode='explore';
         let c5_frac_mode='add', c5_frac_num_ans=0, c5_frac_den_ans=0;
@@ -1760,7 +1962,7 @@
                 // ADDED ANGLES FOR SQUARE
                 let angA=document.createElement('span');angA.className='a-label';angA.innerText='90°';angA.style.top='5px';angA.style.left='5px';
                 let angB=document.createElement('span');angB.className='a-label';angB.innerText='90°';angB.style.top='5px';angB.style.right='5px';
-                let angC=document.createElement('span');angA.className='a-label';angA.innerText='90°';angC.style.bottom='5px';angC.style.left='5px';
+                let angC=document.createElement('span');angC.className='a-label';angC.innerText='90°';angC.style.bottom='5px';angC.style.left='5px';
                 let angD=document.createElement('span');angD.className='a-label';angD.innerText='90°';angD.style.bottom='5px';angD.style.right='5px';
 
                 el.appendChild(lTop); 
@@ -1951,8 +2153,10 @@
                 playSound('wrong');
             }
         }
-
+        
+        // --- INITIAL SETUP CALLS ---
         c1_generate();
+        c4_generate(); // Ensure Class 4 has content ready on page load
     </script>
 </body>
 </html>
