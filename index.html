@@ -45,6 +45,8 @@
             justify-content: center;
             align-items: center;
             transition: opacity 0.5s;
+            /* MODIFICATION 1: Hide the overlay */
+            display: none;
         }
 
         .login-card {
@@ -289,7 +291,7 @@
         .order-container { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin: 30px 0; }
         .order-btn { width: 80px; height: 80px; font-size: 2rem; border-radius: 15px; border: 3px solid #ddd; background: white; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 0 #ccc; }
         .order-btn:hover { transform: translateY(-3px); }
-        .order-btn.correct-order { background: #4ECDC4; color: white; border-color: #3aa8a0; box-shadow: 0 4px 0 #3aa8a0; transform: scale(1.1); pointer-events: none; }
+        .order-btn.correct-order { background: #4ECDC4; color: white; border-color: #3aa8a0; box-shadow: 0 4-box-shadow: 0 4px 0 #3aa8a0; transform: scale(1.1); pointer-events: none; }
         
         /* CLASS 8 POLYGON STYLES */
         .poly-stage { width: 100%; height: 350px; display: flex; justify-content: center; align-items: center; background: white; border: 2px solid #eee; border-radius: 15px; position: relative; margin-top: 15px; }
@@ -380,7 +382,7 @@
 </head>
 <body>
 
-    <div id="login-overlay">
+    <div id="login-overlay" style="display:none;">
         <div class="login-card" id="login-card">
             <h2 class="login-title">Amica<span style="color:var(--secondary)">Soft</span></h2>
             <p class="login-subtitle">Please login to continue to class.</p>
@@ -720,10 +722,10 @@
                 <div id="c8-tab-poly" style="display:none;">
                     <div class="controls">
                         <button class="app-btn" id="btn-c8-p-quad" onclick="c8_setPolyMode(4)">Quadrilateral</button>
-                        <button class="app-btn" id="btn-c8-p-pent" onclick="c8_switchModule(5)">Pentagon</button>
-                        <button class="app-btn" id="btn-c8-p-hex" onclick="c8_switchModule(6)">Hexagon</button>
-                        <button class="app-btn" id="btn-c8-p-hept" onclick="c8_switchModule(7)">Heptagon</button>
-                        <button class="app-btn" id="btn-c8-p-oct" onclick="c8_switchModule(8)">Octagon</button>
+                        <button class="app-btn" id="btn-c8-p-pent" onclick="c8_setPolyMode(5)">Pentagon</button>
+                        <button class="app-btn" id="btn-c8-p-hex" onclick="c8_setPolyMode(6)">Hexagon</button>
+                        <button class="app-btn" id="btn-c8-p-hept" onclick="c8_setPolyMode(7)">Heptagon</button>
+                        <button class="app-btn" id="btn-c8-p-oct" onclick="c8_setPolyMode(8)">Octagon</button>
                     </div>
                     
                     <div class="poly-info-box" id="c8-poly-info">
@@ -762,50 +764,37 @@
     <script>
         /* --- LOGIN & SESSION LOGIC --- */
         function attemptLogin() {
-            const idInput = document.getElementById('login-id');
-            const passInput = document.getElementById('login-pass');
+            // Hardcoded Credentials Simulation (Bypassing actual user input)
             const overlay = document.getElementById('login-overlay');
-            const msg = document.getElementById('login-msg');
-            const card = document.getElementById('login-card');
             const profileBox = document.getElementById('user-profile-box');
             const userNameDisplay = document.getElementById('display-username');
 
-            // Hardcoded Credentials
-            if (idInput.value.trim() === "Amanda" && passInput.value === "Michael") {
-                // SUCCESS
-                // 1. Set the user name in the header
-                userNameDisplay.innerText = idInput.value;
-                
-                // 2. Show the profile box
-                profileBox.style.display = 'flex';
+            // SUCCESS
+            // 1. Set the user name in the header
+            userNameDisplay.innerText = "Guest"; // Set default/simulated user
+            
+            // 2. Show the profile box
+            profileBox.style.display = 'flex';
 
-                // 3. Hide the login overlay
-                overlay.style.opacity = '0';
-                setTimeout(() => {
-                    overlay.style.display = 'none';
-                }, 500);
-
-            } else {
-                // FAILURE
-                msg.style.display = 'block';
-                card.classList.add('shake-anim');
-                setTimeout(() => { card.classList.remove('shake-anim'); }, 300);
-            }
+            // 3. Hide the login overlay
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 500);
         }
 
         function logout() {
             // 1. Hide the profile box
             document.getElementById('user-profile-box').style.display = 'none';
 
-            // 2. Clear inputs
+            // 2. Clear inputs (not needed for simulated login but good practice)
             document.getElementById('login-id').value = '';
             document.getElementById('login-pass').value = '';
             document.getElementById('login-msg').style.display = 'none';
 
-            // 3. Show the login overlay
+            // 3. Show the login overlay (re-enabling it if needed, though goal is to remove it)
             const overlay = document.getElementById('login-overlay');
             overlay.style.display = 'flex';
-            // Slight delay to allow display:flex to apply before changing opacity
             setTimeout(() => {
                 overlay.style.opacity = '1';
             }, 10);
@@ -814,10 +803,14 @@
             showSection('home');
         }
 
-        // Allow "Enter" key to trigger login
-        document.getElementById('login-pass').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') attemptLogin();
-        });
+        // Allow "Enter" key to trigger login (Keep for completeness but not used)
+        const loginPassInput = document.getElementById('login-pass');
+        if (loginPassInput) {
+             loginPassInput.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') attemptLogin();
+            });
+        }
+
 
         /* --- WEBSITE NAVIGATION LOGIC --- */
         function showSection(sectionId) {
@@ -2157,6 +2150,11 @@
         // --- INITIAL SETUP CALLS ---
         c1_generate();
         c4_generate(); // Ensure Class 4 has content ready on page load
+        
+        // MODIFICATION 2: Automatically run the login simulation on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            attemptLogin(); // Simulate successful login
+        });
     </script>
 </body>
 </html>
