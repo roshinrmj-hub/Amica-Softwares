@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- saved from url=(0034)https://playlearngrow.netlify.app/ -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -859,6 +858,14 @@
 
         /* --- GAME LOGIC --- */
         let scores = { 0:{c:0,t:0,s:false}, 1:{c:0,t:0,s:false}, 2:{c:0,t:0,s:false}, 3:{c:0,t:0,s:false}, 4:{c:0,t:0,s:false}, 5:{c:0,t:0,s:false}, 6:{c:0,t:0,s:false}, 8:{c:0,t:0,s:false} }; // ADDED SCORE FOR C4
+        
+        // --- NEW HELPER FUNCTION: Generates random integer inclusive of min/max ---
+        function randomIntInclusive(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
         function prepNewScore(modId) { if(scores[modId]) { scores[modId].s = false; scores[modId].t++; updateScoreUI(modId); } }
         function scoreWin(modId) { if(scores[modId] && !scores[modId].s) { scores[modId].c++; scores[modId].s = true; updateScoreUI(modId); } }
         function resetScore(modId) { 
@@ -866,7 +873,7 @@
             if(modId===0) { if(c0_mode==='count') c0_generate(true); else if(c0_mode==='ba') c0_generate_ba(true); else c0_generate_order(true); }
             if(modId===1) c1_generate(true); 
             if(modId===2) { if(c2_mode==='mult') c2_generate(true); else c2_div_generate(true); } 
-            if(modId===3) c3_generate(true); // C3 Will handle its own mode reset
+            if(modId===3) c3_currency_generate(true); // C3 Will handle its own mode reset
             if(modId===4) c4_generate(true); // ADDED FOR C4
             if(modId===5) c5_frac_generate(true); // C5 Fraction reset
             if(modId===6) c6_newGraphProblem(true); 
@@ -1209,16 +1216,48 @@
         }
 
         // 1. CURRENCY LOGIC
+        // 1. REPLACED: Updated to randomly select between Addition and Subtraction
         function c3_currency_generate(skip) {
+            if (Math.random() < 0.5) {
+                c3_currency_generate_v1(skip); // Original addition scenario
+            } else {
+                c3_currency_generate_v2(skip); // New subtraction/balance scenario
+            }
+        }
+
+        // 1a. ORIGINAL LOGIC (RENAMED) - Addition Scenario
+        function c3_currency_generate_v1(skip) {
             if(!skip) prepNewScore(3);
-            let n1 = Math.floor(Math.random() * 5) * 10 + 5; // 5, 15, 25... 45
-            let n2 = Math.floor(Math.random() * 5) * 10 + 5; // 5, 15, 25... 45
+            let n1 = randomIntInclusive(1, 5) * 10 + 5; // 15, 25, 35, 45, 55
+            let n2 = randomIntInclusive(1, 5) * 10 + 5; // 15, 25, 35, 45, 55
             c3_currency_ans = n1 + n2;
 
             document.getElementById('c3-currency-input').value = '';
             document.getElementById('c3-currency-feedback').innerText = '';
-            document.getElementById('c3-currency-story').innerText = `You bought a toy for ₹${n1} and sweets for ₹${n2}. How much did you spend in total?`;
             document.getElementById('c3-currency-eq').innerText = `₹${n1} + ₹${n2} = ₹?`;
+            document.getElementById('c3-currency-story').innerText = `You bought a toy for ₹${n1} and sweets for ₹${n2}. How much did you spend in total?`;
+        }
+
+        // 1b. NEW LOGIC - Subtraction/Balance Scenario
+        function c3_currency_generate_v2(skip) {
+            if(!skip) prepNewScore(3);
+            
+            // Available starting amounts
+            const startingAmounts = [50, 100, 250, 300, 500];
+            const totalMoney = startingAmounts[Math.floor(Math.random() * startingAmounts.length)];
+            
+            // Spent money must be less than the starting amount and a multiple of 10
+            const maxSpend = totalMoney - 20; // Ensure at least 20 balance left
+            let spentMoney = randomIntInclusive(10, maxSpend);
+            spentMoney = Math.round(spentMoney / 10) * 10; // Round to nearest 10 for simplicity
+
+            c3_currency_ans = totalMoney - spentMoney;
+
+            document.getElementById('c3-currency-input').value = '';
+            document.getElementById('c3-currency-feedback').innerText = '';
+            
+            document.getElementById('c3-currency-eq').innerText = `₹${totalMoney} - ₹${spentMoney} = ₹?`;
+            document.getElementById('c3-currency-story').innerText = `You have ₹${totalMoney}. You spent ₹${spentMoney} on a gift. What is your balance?`;
         }
 
         function c3_currency_check() {
@@ -1954,9 +1993,9 @@
                 
                 // ADDED ANGLES FOR SQUARE
                 let angA=document.createElement('span');angA.className='a-label';angA.innerText='90°';angA.style.top='5px';angA.style.left='5px';
-                let angB=document.createElement('span');angB.className='a-label';angB.innerText='90°';angB.style.top='5px';angB.style.right='5px';
-                let angC=document.createElement('span');angC.className='a-label';angC.innerText='90°';angC.style.bottom='5px';angC.style.left='5px';
-                let angD=document.createElement('span');angD.className='a-label';angD.innerText='90°';angD.style.bottom='5px';angD.style.right='5px';
+                let angB=document.createElement('span');angA.className='a-label';angA.innerText='90°';angA.style.top='5px';angA.style.right='5px';
+                let angC=document.createElement('span');angA.className='a-label';angA.innerText='90°';angA.style.bottom='5px';angA.style.left='5px';
+                let angD=document.createElement('span');angA.className='a-label';angA.innerText='90°';angA.style.bottom='5px';angA.style.right='5px';
 
                 el.appendChild(lTop); 
                 el.appendChild(vA);el.appendChild(vB);el.appendChild(vC);el.appendChild(vD);
