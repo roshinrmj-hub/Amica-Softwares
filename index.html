@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+<!-- saved from url=(0034)https://playlearngrow.netlify.app/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Amica Soft - Interactive Learning</title>
     <style>
@@ -382,7 +382,7 @@
 </head>
 <body>
 
-    <div id="login-overlay" style="display:none;">
+    <div id="login-overlay" style="display: none; opacity: 0;">
         <div class="login-card" id="login-card">
             <h2 class="login-title">Amica<span style="color:var(--secondary)">Soft</span></h2>
             <p class="login-subtitle">Please login to continue to class.</p>
@@ -403,21 +403,21 @@
     </div>
 
     <nav class="site-header">
-        <a href="#" class="brand-logo" onclick="showSection('home')">Amica<span>Soft</span></a>
+        <a href="https://playlearngrow.netlify.app/#" class="brand-logo" onclick="showSection(&#39;home&#39;)">Amica<span>Soft</span></a>
         
         <button class="mobile-menu-btn" onclick="toggleMobileNav()">☰</button>
 
         <div class="nav-right">
             <div class="main-nav" id="main-nav">
-                <a onclick="showSection('home'); toggleMobileNav()" class="nav-link">Home</a>
-                <a onclick="showSection('about'); toggleMobileNav()" class="nav-link">About Us</a>
-                <a onclick="showSection('modules'); toggleMobileNav()" class="nav-link btn-cta">Start Learning</a>
-                <a onclick="showSection('contact'); toggleMobileNav()" class="nav-link">Contact</a>
+                <a onclick="showSection(&#39;home&#39;); toggleMobileNav()" class="nav-link">Home</a>
+                <a onclick="showSection(&#39;about&#39;); toggleMobileNav()" class="nav-link">About Us</a>
+                <a onclick="showSection(&#39;modules&#39;); toggleMobileNav()" class="nav-link btn-cta">Start Learning</a>
+                <a onclick="showSection(&#39;contact&#39;); toggleMobileNav()" class="nav-link">Contact</a>
             </div>
 
-            <div id="user-profile-box">
+            <div id="user-profile-box" style="display: flex;">
                 <div class="user-icon">👤</div>
-                <span id="display-username" class="user-name-text">User</span>
+                <span id="display-username" class="user-name-text">Guest</span>
                 <button onclick="logout()" class="btn-logout" title="Logout">⏻</button>
             </div>
         </div>
@@ -432,7 +432,7 @@
                 <div class="bridge-pillar bridge-center"><span class="bridge-icon">🌉</span><div class="pillar-title">Amica Soft</div><div class="pillar-desc">The digital bridge connecting theory to practice.</div></div>
                 <div class="bridge-pillar"><span class="bridge-icon">👩‍🏫</span><div class="pillar-title">Teachers</div><div class="pillar-desc">Empowered with visual tools for practical demonstration.</div></div>
             </div>
-            <button onclick="showSection('modules')" class="btn-cta" style="font-size: 1.2rem; padding: 15px 35px; cursor: pointer;">Enter Classrooms</button>
+            <button onclick="showSection(&#39;modules&#39;)" class="btn-cta" style="font-size: 1.2rem; padding: 15px 35px; cursor: pointer;">Enter Classrooms</button>
         </div>
     </div>
 
@@ -461,7 +461,7 @@
         <div id="app-interface">
             <div style="margin-bottom: 20px;"><h1 style="color: var(--dark);">🎓 Smart Math World</h1><p>Interactive Syllabus for KG - Class 8</p></div>
             <nav class="app-nav">
-                <button class="app-btn active" onclick="switchModule(0)">KG</button><button class="app-btn" onclick="switchModule(1)">Class 1</button><button class="app-btn" onclick="switchModule(2)">Class 2</button><button class="app-btn" onclick="switchModule(3)">Class 3</button><button class="app-btn" onclick="switchModule(4)">Class 4</button><button class="app-btn" onclick="switchModule(5)">Class 5</button><button class="app-btn" onclick="switchModule(6)">Class 6</button><button class="app-btn" onclick="switchModule(7)">Class 7</button><button class="app-btn" onclick="switchModule(8)">Class 8</button>
+                <button class="app-btn active" onclick="switchModule(0)">KG</button><button class="app-btn" onclick="switchModule(1)">Class 1</button><button class="app-btn" onclick="switchModule(2)">Class 2</button><button class="app-btn" onclick="switchModule(3)">Class 3</button><button class="app-btn" onclick="switchModule(4)">Class 4</button><button class="app-btn" onclick="switchModule(5)">Class 5</button><button class="app-btn" onclick="switchModule(6)">Class 6</button><button class="app-btn" onclick="switchModule(7)">Class 7</button><button class="app-btn" onclick="switchModule(8)">Class 8</button><button class="app-btn" onclick="window.location.href='https://amicasoftsenior.netlify.app/'">High School</button>
             </nav>
             
             <div id="module-0" class="module-container active-module">
@@ -469,9 +469,9 @@
                 <h2 class="module-title">Kindergarten</h2>
                 
                 <div class="controls">
-                    <button class="app-btn active" id="btn-c0-count" onclick="c0_switchMode('count')">Counting</button>
-                    <button class="app-btn" id="btn-c0-ba" onclick="c0_switchMode('ba')">Before & After</button>
-                    <button class="app-btn" id="btn-c0-order" onclick="c0_switchMode('order')">Ordering</button>
+                    <button class="app-btn active" id="btn-c0-count" onclick="c0_switchMode(&#39;count&#39;)">Counting</button>
+                    <button class="app-btn" id="btn-c0-ba" onclick="c0_switchMode(&#39;ba&#39;)">Before &amp; After</button>
+                    <button class="app-btn" id="btn-c0-order" onclick="c0_switchMode(&#39;order&#39;)">Ordering</button>
                 </div>
 
                 <div id="c0-mode-count">
@@ -500,15 +500,15 @@
 
             </div>
             
-            <div id="module-1" class="module-container"><div class="score-panel"><span class="score-text">📝 Test Score:</span><span class="score-val" id="score-1">0 / 0</span><button class="btn-reset" onclick="resetScore(1)">Start Test</button></div><h2 class="module-title">Class 1: Fun with Apples</h2><div class="controls"><button class="btn-action" onclick="c1_setMode('add')" style="background:#FFD166; color:#333">Addition (+)</button><button class="btn-action" onclick="c1_setMode('sub')" style="background:#EF476F; color:white">Subtraction (-)</button></div><p id="c1-instruction" class="story-text">Count the apples!</p><div class="fruit-stage" id="c1-visuals"></div><div class="equation"><span id="c1-eq">?</span></div><input type="number" id="c1-input" class="game-input" placeholder="?"><button class="btn-action" onclick="c1_check()">Check</button><button class="btn-action btn-new" onclick="c1_generate()">New Problem</button><div id="c1-feedback" class="feedback"></div></div>
+            <div id="module-1" class="module-container"><div class="score-panel"><span class="score-text">📝 Test Score:</span><span class="score-val" id="score-1">0 / 1</span><button class="btn-reset" onclick="resetScore(1)">Start Test</button></div><h2 class="module-title">Class 1: Fun with Apples</h2><div class="controls"><button class="btn-action" onclick="c1_setMode(&#39;add&#39;)" style="background:#FFD166; color:#333">Addition (+)</button><button class="btn-action" onclick="c1_setMode(&#39;sub&#39;)" style="background:#EF476F; color:white">Subtraction (-)</button></div><p id="c1-instruction" class="story-text">Count all apples together!</p><div class="fruit-stage" id="c1-visuals"><div style="display:inline-block"><div class="apple"></div><div class="apple"></div><div class="apple"></div><div class="apple"></div></div> <span style="font-size:3rem; margin:0 10px;">+</span> <div style="display:inline-block"><div class="apple"></div><div class="apple"></div></div></div><div class="equation"><span id="c1-eq">4 + 2 = ?</span></div><input type="number" id="c1-input" class="game-input" placeholder="?"><button class="btn-action" onclick="c1_check()">Check</button><button class="btn-action btn-new" onclick="c1_generate()">New Problem</button><div id="c1-feedback" class="feedback"></div></div>
             
             <div id="module-2" class="module-container">
                 <div class="score-panel"><span class="score-text">📝 Test Score:</span><span class="score-val" id="score-2">0 / 0</span><button class="btn-reset" onclick="resetScore(2)">Start Test</button></div>
-                <h2 class="module-title">Class 2: Multiplication & Division</h2>
+                <h2 class="module-title">Class 2: Multiplication &amp; Division</h2>
                 
                 <div class="controls">
-                    <button class="app-btn active" id="btn-c2-mult" onclick="c2_setMode('mult')">Multiplication (×)</button>
-                    <button class="app-btn" id="btn-c2-div" onclick="c2_setMode('div')">Division (÷)</button>
+                    <button class="app-btn active" id="btn-c2-mult" onclick="c2_setMode(&#39;mult&#39;)">Multiplication (×)</button>
+                    <button class="app-btn" id="btn-c2-div" onclick="c2_setMode(&#39;div&#39;)">Division (÷)</button>
                 </div>
 
                 <div id="c2-mult-section">
@@ -538,13 +538,13 @@
             
             <div id="module-3" class="module-container">
                 <div class="score-panel"><span class="score-text">📝 Test Score:</span><span class="score-val" id="score-3">0 / 0</span><button class="btn-reset" onclick="resetScore(3)">Start Test</button></div>
-                <h2 class="module-title">Class 3: Measurement & Money</h2>
+                <h2 class="module-title">Class 3: Measurement &amp; Money</h2>
                 
                 <div class="controls">
-                    <button class="app-btn active" id="btn-c3-currency" onclick="c3_switchMode('currency')">Currency (₹)</button>
-                    <button class="app-btn" id="btn-c3-time" onclick="c3_switchMode('time')">Time (Clock ⏰)</button>
-                    <button class="app-btn" id="btn-c3-weight" onclick="c3_switchMode('weight')">Weight (Scales ⚖️)</button>
-                    <button class="app-btn" id="btn-c3-length" onclick="c3_switchMode('length')">Length (Ruler 📏)</button>
+                    <button class="app-btn active" id="btn-c3-currency" onclick="c3_switchMode(&#39;currency&#39;)">Currency (₹)</button>
+                    <button class="app-btn" id="btn-c3-time" onclick="c3_switchMode(&#39;time&#39;)">Time (Clock ⏰)</button>
+                    <button class="app-btn" id="btn-c3-weight" onclick="c3_switchMode(&#39;weight&#39;)">Weight (Scales ⚖️)</button>
+                    <button class="app-btn" id="btn-c3-length" onclick="c3_switchMode(&#39;length&#39;)">Length (Ruler 📏)</button>
                 </div>
                 
                 <div id="c3-mode-currency">
@@ -609,31 +609,31 @@
             </div>
             
             <div id="module-4" class="module-container">
-                <div class="score-panel"><span class="score-text">📝 Test Score:</span><span class="score-val" id="score-4">0 / 0</span><button class="btn-reset" onclick="resetScore(4)">Start Test</button></div>
+                <div class="score-panel"><span class="score-text">📝 Test Score:</span><span class="score-val" id="score-4">0 / 1</span><button class="btn-reset" onclick="resetScore(4)">Start Test</button></div>
                 <h2 class="module-title">Class 4: Order of Operations (BODMAS)</h2>
                 
                 <div id="c4-explanation" style="text-align: left; max-width: 600px; margin: 0 auto 30px auto; background: #e0f7fa; padding: 20px; border-radius: 10px; border-left: 5px solid var(--secondary);">
                     <h3>The BODMAS Rule 💡</h3>
                     <p>When an equation has many different operations (like +, -, ×, ÷), we must follow a special order to get the correct answer. This order is called **BODMAS**.</p>
                     <table style="width:100%; margin: 15px 0; border-collapse: collapse; text-align: center;">
-                        <tr style="background-color: var(--secondary); color: white;"><th>Letter</th><th>Meaning</th><th>What to Solve</th><th>Priority</th></tr>
+                        <tbody><tr style="background-color: var(--secondary); color: white;"><th>Letter</th><th>Meaning</th><th>What to Solve</th><th>Priority</th></tr>
                         <tr><td>**B**</td><td>Brackets</td><td>() or []</td><td>Highest</td></tr>
                         <tr><td>**O**</td><td>Orders</td><td>Powers or Roots (e.g., 2²)</td><td>High</td></tr>
                         <tr style="background-color: #f0f4f8;"><td>**D**</td><td>Division</td><td>÷</td><td rowspan="2">Equal (Left to Right)</td></tr>
                         <tr style="background-color: #f0f4f8;"><td>**M**</td><td>Multiplication</td><td>×</td></tr>
                         <tr><td>**A**</td><td>Addition</td><td>+</td><td rowspan="2">Equal (Left to Right)</td></tr>
                         <tr><td>**S**</td><td>Subtraction</td><td>-</td></tr>
-                    </table>
-                    <p style="font-style: italic;">**Remember:** Division & Multiplication have equal priority. Do whichever comes first from the **left to right**! Same for Addition & Subtraction.</p>
+                    </tbody></table>
+                    <p style="font-style: italic;">**Remember:** Division &amp; Multiplication have equal priority. Do whichever comes first from the **left to right**! Same for Addition &amp; Subtraction.</p>
                 </div>
 
                 <div id="c4-quiz-area">
                     <div id="c4-story" class="story-text" style="font-size: 1.4rem;">Solve the expression using the BODMAS rule.</div>
-                    <div class="equation" style="font-size: 2.2rem; background: #fff8e1; padding: 10px; border-radius: 8px;"><span id="c4-eq">?</span></div>
+                    <div class="equation" style="font-size: 2.2rem; background: #fff8e1; padding: 10px; border-radius: 8px;"><span id="c4-eq">11 × (4 + 2) + 5</span></div>
                     
                     <div id="c4-example-steps" style="display:none; text-align:left; max-width: 600px; margin: 20px auto; padding: 15px; border: 1px solid #ddd; border-radius: 10px;">
                         <p style="font-weight: bold;">Step-by-Step Example:</p>
-                        <div id="c4-steps-content"></div>
+                        <div id="c4-steps-content"><p style="margin-bottom: 5px;">1. (B) 4 + 2 = 6</p><p style="margin-bottom: 5px;">2. (M) 11 × 6 = 66</p><p style="margin-bottom: 5px;">3. (A) 66 + 5 = 71</p></div>
                     </div>
 
                     <div class="controls">
@@ -652,33 +652,33 @@
             </div>
             
             <div id="module-5" class="module-container">
-                <h2 class="module-title">Class 5: Shapes & Fractions</h2>
+                <h2 class="module-title">Class 5: Shapes &amp; Fractions</h2>
                 <div class="controls">
-                    <button class="app-btn active" id="btn-c5-explore" onclick="c5_switchMode('explore')">Shape Explorer</button>
-                    <button class="app-btn" id="btn-c5-frac" onclick="c5_switchMode('frac')">Fractions Quiz</button>
+                    <button class="app-btn active" id="btn-c5-explore" onclick="c5_switchMode(&#39;explore&#39;)">Shape Explorer</button>
+                    <button class="app-btn" id="btn-c5-frac" onclick="c5_switchMode(&#39;frac&#39;)">Fractions Quiz</button>
                 </div>
                 
                 <div id="c5-mode-explore">
                     <p class="story-text">Explore properties. No score for exploration.</p>
                     <div class="controls">
-                        <button class="btn-action" onclick="c5_show('rect')" style="background:var(--accent); color:#333">Rectangle</button>
-                        <button class="btn-action" onclick="c5_show('circle')" style="background:var(--primary)">Circle</button>
-                        <button class="btn-action" onclick="c5_show('tri')" style="background:var(--secondary)">Triangle</button>
+                        <button class="btn-action" onclick="c5_show(&#39;rect&#39;)" style="background:var(--accent); color:#333">Rectangle</button>
+                        <button class="btn-action" onclick="c5_show(&#39;circle&#39;)" style="background:var(--primary)">Circle</button>
+                        <button class="btn-action" onclick="c5_show(&#39;tri&#39;)" style="background:var(--secondary)">Triangle</button>
                     </div>
                     <div class="shape-stage"><div id="c5-shape-area"></div></div>
                     <div id="c5-info" class="story-text">Select a shape above...</div>
                     <div class="controls">
-                        <button class="btn-action" onclick="c5_highlight('corners')">Show Corners</button>
-                        <button class="btn-action" onclick="c5_highlight('sides')" style="background: #FF9F1C;">Show Edges</button>
+                        <button class="btn-action" onclick="c5_highlight(&#39;corners&#39;)">Show Corners</button>
+                        <button class="btn-action" onclick="c5_highlight(&#39;sides&#39;)" style="background: #FF9F1C;">Show Edges</button>
                     </div>
                 </div>
 
                 <div id="c5-mode-frac" style="display:none;">
                     <div class="score-panel"><span class="score-text">📝 Test Score:</span><span class="score-val" id="score-5">0 / 0</span><button class="btn-reset" onclick="resetScore(5)">Start Test</button></div>
                     <div class="controls">
-                        <button class="app-btn active" id="btn-c5-f-add" onclick="c5_frac_setMode('add')">Addition (+)</button>
-                        <button class="app-btn" id="btn-c5-f-sub" onclick="c5_frac_setMode('sub')">Subtraction (-)</button>
-                        <button class="app-btn" id="btn-c5-f-mult" onclick="c5_frac_setMode('mult')">Multiplication (×)</button>
+                        <button class="app-btn active" id="btn-c5-f-add" onclick="c5_frac_setMode(&#39;add&#39;)">Addition (+)</button>
+                        <button class="app-btn" id="btn-c5-f-sub" onclick="c5_frac_setMode(&#39;sub&#39;)">Subtraction (-)</button>
+                        <button class="app-btn" id="btn-c5-f-mult" onclick="c5_frac_setMode(&#39;mult&#39;)">Multiplication (×)</button>
                     </div>
                     <div id="c5-frac-story" class="story-text">Loading fraction problem...</div>
                     <div id="c5-frac-stage" class="frac-stage"></div>
@@ -695,22 +695,22 @@
 
             </div>
             
-            <div id="module-6" class="module-container"><div class="score-panel"><span class="score-text">📝 Test Score:</span><span class="score-val" id="score-6">0 / 0</span><button class="btn-reset" onclick="resetScore(6)">Start Test</button></div><h2 class="module-title">Class 6: Integers & Graphs</h2><div class="controls"><button class="app-btn active" id="btn-c6-line" onclick="c6_switchMode('line')">Number Line</button><button class="app-btn" id="btn-c6-graph" onclick="c6_switchMode('graph')">Graph Quiz</button></div><div id="c6-mode-walker"><p class="story-text">Integers: Walk Left for Negative (-), Right for Positive (+).</p><div class="walker-track" id="c6-walker-track"><div id="c6-walker" class="walker-dot"></div><div id="c6-walker-man" class="walker-man"></div></div><div class="controls"><label>Move to: </label><input type="number" id="c6-input" class="game-input" placeholder="-5"><button class="btn-action" onclick="c6_move()">Walk</button></div><div id="c6-feedback" class="feedback"></div></div><div id="c6-mode-graph" style="display:none;"><p id="c6-graph-instruction" class="story-text" style="font-weight:bold; color: var(--dark);">Tap the Grid at (2, 3)</p><div class="graph-board" onclick="c6_plotClick(event)" id="c6-board"><div class="axis-x"></div><div class="axis-y"></div><div id="c6-plot-dot" class="plot-point"></div></div><div id="c6-graph-feedback" class="feedback"></div><button class="btn-action btn-new" onclick="c6_newGraphProblem()">New Point</button></div></div>
+            <div id="module-6" class="module-container"><div class="score-panel"><span class="score-text">📝 Test Score:</span><span class="score-val" id="score-6">0 / 0</span><button class="btn-reset" onclick="resetScore(6)">Start Test</button></div><h2 class="module-title">Class 6: Integers &amp; Graphs</h2><div class="controls"><button class="app-btn active" id="btn-c6-line" onclick="c6_switchMode(&#39;line&#39;)">Number Line</button><button class="app-btn" id="btn-c6-graph" onclick="c6_switchMode(&#39;graph&#39;)">Graph Quiz</button></div><div id="c6-mode-walker"><p class="story-text">Integers: Walk Left for Negative (-), Right for Positive (+).</p><div class="walker-track" id="c6-walker-track"><div id="c6-walker" class="walker-dot"></div><div id="c6-walker-man" class="walker-man"></div></div><div class="controls"><label>Move to: </label><input type="number" id="c6-input" class="game-input" placeholder="-5"><button class="btn-action" onclick="c6_move()">Walk</button></div><div id="c6-feedback" class="feedback"></div></div><div id="c6-mode-graph" style="display:none;"><p id="c6-graph-instruction" class="story-text" style="font-weight:bold; color: var(--dark);">Tap the Grid at (2, 3)</p><div class="graph-board" onclick="c6_plotClick(event)" id="c6-board"><div class="axis-x"></div><div class="axis-y"></div><div id="c6-plot-dot" class="plot-point"></div></div><div id="c6-graph-feedback" class="feedback"></div><button class="btn-action btn-new" onclick="c6_newGraphProblem()">New Point</button></div></div>
             
-            <div id="module-7" class="module-container"><h2 class="module-title">Class 7: Shape Constructor</h2><p class="story-text">Constructor Tool (Ungraded Practice)</p><div class="controls"><button class="app-btn active" id="btn-c7-circle" onclick="c7_setShapeMode('circle')">Circle</button><button class="app-btn" id="btn-c7-square" onclick="c7_setShapeMode('square')">Square</button><button class="app-btn" id="btn-c7-tri" onclick="c7_setShapeMode('tri')">Eq. Triangle</button></div><div class="controls" style="background: #fff3e0; padding: 15px; border-radius: 10px;"><label id="c7-label">Radius (cm): </label><input type="number" id="c7-dim" class="game-input" min="1" max="6" value="3" style="width: 80px;"><button class="btn-action" onclick="c7_construct()">Draw & Calc</button></div><div id="c7-stage" class="constructor-stage"><span style="color:#aaa">Shape will appear here...</span></div><div id="c7-results" class="result-panel"><h3>Calculated Properties:</h3><div id="c7-calc-content"></div></div></div>
+            <div id="module-7" class="module-container"><h2 class="module-title">Class 7: Shape Constructor</h2><p class="story-text">Constructor Tool (Ungraded Practice)</p><div class="controls"><button class="app-btn active" id="btn-c7-circle" onclick="c7_setShapeMode(&#39;circle&#39;)">Circle</button><button class="app-btn" id="btn-c7-square" onclick="c7_setShapeMode(&#39;square&#39;)">Square</button><button class="app-btn" id="btn-c7-tri" onclick="c7_setShapeMode(&#39;tri&#39;)">Eq. Triangle</button></div><div class="controls" style="background: #fff3e0; padding: 15px; border-radius: 10px;"><label id="c7-label">Radius (cm): </label><input type="number" id="c7-dim" class="game-input" min="1" max="6" value="3" style="width: 80px;"><button class="btn-action" onclick="c7_construct()">Draw &amp; Calc</button></div><div id="c7-stage" class="constructor-stage"><span style="color:#aaa">Shape will appear here...</span></div><div id="c7-results" class="result-panel"><h3>Calculated Properties:</h3><div id="c7-calc-content"></div></div></div>
             
             <div id="module-8" class="module-container">
                 <div class="score-panel"><span class="score-text">📝 Test Score:</span><span class="score-val" id="score-8">0 / 0</span><button class="btn-reset" onclick="resetScore(8)">Start Test</button></div>
-                <h2 class="module-title">Class 8: Algebra & Geometry</h2>
+                <h2 class="module-title">Class 8: Algebra &amp; Geometry</h2>
                 
                 <div class="controls">
-                    <button class="app-btn active" id="btn-c8-alg" onclick="c8_switchTab('alg')">Algebra Scenarios</button>
-                    <button class="app-btn" id="btn-c8-poly" onclick="c8_switchTab('poly')">Polygons & Area</button>
-                    <button class="app-btn" id="btn-c8-solid" onclick="c8_switchTab('solid')">3D Shapes</button>
+                    <button class="app-btn active" id="btn-c8-alg" onclick="c8_switchTab(&#39;alg&#39;)">Algebra Scenarios</button>
+                    <button class="app-btn" id="btn-c8-poly" onclick="c8_switchTab(&#39;poly&#39;)">Polygons &amp; Area</button>
+                    <button class="app-btn" id="btn-c8-solid" onclick="c8_switchTab(&#39;solid&#39;)">3D Shapes</button>
                 </div>
 
                 <div id="c8-tab-alg">
-                    <div class="controls"><button class="app-btn" id="btn-c8-taxi" onclick="c8_setAlgMode('taxi')">Taxi Ride</button><button class="app-btn" id="btn-c8-age" onclick="c8_setAlgMode('age')">Age Riddle</button></div>
+                    <div class="controls"><button class="app-btn" id="btn-c8-taxi" onclick="c8_setAlgMode(&#39;taxi&#39;)">Taxi Ride</button><button class="app-btn" id="btn-c8-age" onclick="c8_setAlgMode(&#39;age&#39;)">Age Riddle</button></div>
                     <div class="scenario-box" id="c8-scenario-box">
                         <div class="alg-stage" id="c8-alg-stage"></div>
                         <div class="controls" id="c8-controls" style="margin-top:20px;"></div>
@@ -757,7 +757,7 @@
                 </div>
             </div>
 
-            <div class="brand-footer">Amanda & Michael's Amica Soft © 2025</div>
+            <div class="brand-footer">Amanda &amp; Michael's Amica Soft © 2025</div>
         </div>
     </div>
 
@@ -2156,5 +2156,6 @@
             attemptLogin(); // Simulate successful login
         });
     </script>
-</body>
-</html>
+
+
+</body></html>
